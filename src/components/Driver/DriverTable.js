@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../../firebase-config";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 const Table = () => {
@@ -43,12 +37,14 @@ const Table = () => {
       <main>
         <div className="flex justify-between container mx-auto mt-6 px-4">
           {/*=== DRIVERS HEADING ===*/}
-          <h1 className="md:text-3xl text-xl font-semibold">Drivers</h1>
+          <h1 className="md:text-4xl text-xl font-semibold text-[#353c4e]">
+            Drivers
+          </h1>
           {/*=== NAVIGATES TO DRIVERS BASIC INFORMATION PAGE ===*/}
           <Link
             to="/driver/createuser"
             className={
-              "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
+              "bg-[rgba(0,255,0,0.2)] text-green-700 hover:bg-[rgba(0,255,0,0.1)] border-green-700 border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
@@ -71,7 +67,7 @@ const Table = () => {
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <Link
             to="/"
-            className="bg-orange-400 px-4 text-white py-2 rounded-md mr-4"
+            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)] py-2 rounded-md mr-4"
           >
             Download Report <i class="fa-solid fa-download"></i>
           </Link>
@@ -80,6 +76,7 @@ const Table = () => {
         <table className="container mx-auto text-center hidden md:table">
           <tr className="shadow-sm shadow-gray-400 container px-8">
             {/*=== HEADING OF TABLE ===*/}
+            <th></th>
             <th className="py-5">Serial No</th>
             <th>Full Name</th>
             <th>Gender</th>
@@ -91,6 +88,9 @@ const Table = () => {
           {/* RENDERING DRIVER DATA ON WEBSITE */}
           {drivers.map((data, index) => (
             <tr className="shadow-sm shadow-gray-400  container hover:cursor-pointer group-hover:hidden">
+              <td>
+                <input type="checkbox" />
+              </td>
               <td className="py-5">{index + 1}</td>
               <td>{data.fullName}</td>
               <td>{data.gender}</td>

@@ -6,6 +6,7 @@ import { auth } from "../../firebase-config";
 const Mainnav = () => {
   const [userInfo, setUserInfo] = useState();
   const [menuToggle, setMenuToggle] = useState(true);
+  const [ProfileToggle, setProfileToggle] = useState(true);
 
   const Navigate = useNavigate();
   useEffect(() => {
@@ -22,6 +23,9 @@ const Mainnav = () => {
 
   function Toggle() {
     setMenuToggle(!menuToggle);
+  }
+  function profileToggle() {
+    setProfileToggle(!ProfileToggle);
   }
 
   return (
@@ -52,9 +56,16 @@ const Mainnav = () => {
           <div className="py-5 px-5">
             <div className="flex justify-between items-center">
               {/*=== ACCOUNT PICTURE NAME AND DETAIL ===*/}
-              <div className="flex items-center justify-between space-x-3">
-                <i class="fa-solid fa-user bg-green-700 p-3 rounded-full text-white"></i>
-                <div className="hidden md:block">
+              <div
+                className="flex items-center justify-between space-x-3"
+                onClick={profileToggle}
+              >
+                <i class="fa-solid fa-user bg-[rgba(0,255,0,0.2)] border-green-700 border-2 p-3 rounded-full text-green-600 cursor-pointer hover:bg-[rgba(0,255,0,0.1)]"></i>
+                <div
+                  className={
+                    "hidden md:" + (ProfileToggle ? "hidden" : "block")
+                  }
+                >
                   <p className="text-sm font-medium">{userInfo?.email}</p>
                   <p className="text-sm">
                     {userInfo?.email === "admin@gmail.com" ? "Admin" : "User"}

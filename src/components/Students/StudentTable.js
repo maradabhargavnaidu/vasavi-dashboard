@@ -37,7 +37,9 @@ const StudentTable = () => {
       <main>
         <div className="flex justify-between container mx-auto mt-6 px-4">
           {/*=== DRIVERS HEADING ===*/}
-          <h1 className="md:text-3xl text-xl font-semibold">Students</h1>
+          <h1 className="md:text-4xl text-xl font-semibold text-[#353c4e]">
+            Students
+          </h1>
           {/*=== NAVIGATES TO DRIVERS BASIC INFORMATION PAGE ===*/}
           <Link
             to="/students/createstudent"
@@ -65,7 +67,7 @@ const StudentTable = () => {
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <Link
             to="/"
-            className="bg-orange-400 px-4 text-white py-2 rounded-md mr-4"
+            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)] py-2 rounded-md mr-4"
           >
             Download Report <i class="fa-solid fa-download"></i>
           </Link>
@@ -74,6 +76,7 @@ const StudentTable = () => {
         <table className="container mx-auto text-center hidden md:table">
           <tr className="shadow-sm shadow-gray-400 container px-8">
             {/*=== HEADING OF TABLE ===*/}
+            <th></th>
             <th className="py-5">Serial No</th>
             <th>Name</th>
             <th>RollNo</th>
@@ -88,6 +91,9 @@ const StudentTable = () => {
           {/* RENDERING DRIVER DATA ON WEBSITE */}
           {students.map((data, index) => (
             <tr className="shadow-sm shadow-gray-400  container">
+              <td>
+                <input type="checkbox" />
+              </td>
               <td className="py-5">{index + 1}</td>
               <td>{data.name}</td>
               <td>{data.rollNo}</td>

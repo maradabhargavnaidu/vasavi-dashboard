@@ -61,7 +61,7 @@ const Mainnav = () => {
                   </p>
                 </div>
                 <button
-                  className="bg-red-400 px-3 text-white font-normal py-2 rounded-md flex items-center hover:bg-red-500"
+                  className="bg-[rgba(255,0,0,0.07)] border-red-700 border-2 px-3 text-red-700 font-normal py-2 rounded-md flex items-center hover:bg-[rgba(255,0,0,0.1)]"
                   onClick={logout}
                 >
                   Logout

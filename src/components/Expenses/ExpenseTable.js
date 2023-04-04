@@ -41,7 +41,7 @@ const Table = () => {
           <Link
             to="/expense/create-expense"
             className={
-              "bg-orange-400 px-4 text-white py-2 rounded-md " +
+              "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >

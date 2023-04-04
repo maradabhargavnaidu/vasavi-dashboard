@@ -48,7 +48,7 @@ const Table = () => {
           <Link
             to="/driver/createuser"
             className={
-              "bg-green-600 px-4 text-white py-2 rounded-md " +
+              "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 text-white py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >

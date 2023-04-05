@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
@@ -25,7 +25,7 @@ const Expenseform = () => {
     });
   };
   return (
-    <div className="md:w-[80%] md:px-4 md:float-right">
+    <div className="md:w-[80%] md:px-4 md:float-right font-abc">
       {/*=== EXPENSE FORM START HERE ===*/}
       <main className="container mx-auto mt-5">
         <h1 className="font-medium text-4xl text-center">
@@ -112,6 +112,20 @@ const Expenseform = () => {
                   setAmount(e.target.value);
                 }}
                 placeholder="Amount"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-around items-center">
+            {/*=== DATE ===*/}
+            <div className="flex flex-col justify-center items-center">
+              <label className="font-medium">Upload Bill:</label>
+              <input
+                type="file"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] py-3"
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+                placeholder="Date"
               />
             </div>
           </div>

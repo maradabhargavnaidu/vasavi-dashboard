@@ -25,8 +25,10 @@ const Busform = () => {
     <div className="md:w-[80%] md:px-4 md:float-right">
       {/*=== BUS FORM START HERE ===*/}
       <main className="container mx-auto mt-5">
-        <h1 className="font-medium text-4xl text-center">Bus Information</h1>
-        <form className="mt-8 flex flex-col md:space-y-6 container px-4">
+        <h1 className="font-medium text-4xl text-center M font-abc">
+          Bus Information
+        </h1>
+        <form className="mt-8 flex flex-col md:space-y-6 container px-4 font-abc">
           {/* COMBINING TWO INPUT IN FLEX */}
           <div className="flex-col flex md:flex-row justify-around items-center">
             {/*=== BUS NUMBER ===*/}

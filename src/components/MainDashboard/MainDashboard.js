@@ -18,7 +18,8 @@ const MainDashboard = () => {
         {
           label: "Expenses",
           data: expenseData.map((data) => data.Amount),
-          backgroundColor: ["lightgreen", "orange"],
+          borderColor: ["black"],
+          backgroundColor: ["#353c4e"],
         },
       ],
     });
@@ -32,7 +33,7 @@ const MainDashboard = () => {
     <div>
       <Mainnav />
       <MainBar />
-      <div className="w-[900px] mt-64 px-5 mx-auto">
+      <div className="md:w-[900px] md:mt-64 px-5 mx-auto container">
         <BarChart Chartdata={expenseData} className="w-[900px]" />
       </div>
     </div>

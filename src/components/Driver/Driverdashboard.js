@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "./DriverTable";
+import DrComponent from "./DrComponent";
 import Mainnav from "../MainDashboard/Mainnav";
 const Dashboard = () => {
   return (
@@ -7,7 +8,7 @@ const Dashboard = () => {
       {/*=== DASHBOARD NAVBAR ===*/}
       <Mainnav />
       {/*=== DASHBOARD DRIVERS TABLE ===*/}
-      <Table />
+      <DrComponent />
     </div>
   );
 };

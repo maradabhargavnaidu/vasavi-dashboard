@@ -32,7 +32,7 @@ const BusTable = () => {
   }, []);
 
   return (
-    <div className="md:w-[80%] md:float-right md:px-4">
+    <div className="md:w-[80%] md:float-right md:px-4 font-abc">
       {/*=== TOP HEADER ===*/}
       <main>
         <div className="flex justify-between container mx-auto mt-6 px-4">
@@ -73,7 +73,7 @@ const BusTable = () => {
           </Link>
         </div>
         {/*=== TABLE STARTS HERE ===*/}
-        <table className="container mx-auto text-center hidden md:table">
+        <table className="container mx-auto text-center hidden md:table font-abc">
           <tr className="shadow-sm shadow-gray-400 container px-8">
             {/*=== HEADING OF TABLE ===*/}
             <th></th>

@@ -30,7 +30,7 @@ const Mainnav = () => {
 
   return (
     <div>
-      <nav className=" shadow-sm shadow-gray-500">
+      <nav className=" shadow-sm shadow-gray-500 font-abc">
         <div class=" flex  md:space-x-0 w-full justify-between mx-auto">
           <div class="flex bg-[#353c4e] justify-between py-5 items-center shadow-sm shadow-black px-5 w-[56%] md:w-[20%]">
             <Link to="/">
@@ -84,7 +84,7 @@ const Mainnav = () => {
       </nav>
       <div
         className={
-          "flex flex-col bg-[#353c4e] w-[56.5%] text-[#dcdcdc] absolute float-left md:w-[20%] md:h-[89.9vh] px-8 py-5 " +
+          "flex flex-col bg-[#353c4e] w-[56.5%] text-[#dcdcdc] font-abc absolute z-50 float-left md:w-[20%] md:h-[89.9vh] px-8 py-5 " +
           (menuToggle ? "md:block hidden" : "md:hidden block")
         }
       >

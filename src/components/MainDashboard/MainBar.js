@@ -39,7 +39,7 @@ const MainBar = () => {
   return (
     <div>
       <div>
-        <div className="flex flex-col px-5 md:px-0 md:items-start justify-between md:flex-row md:justify-around md:w-[80%] md:float-right mt-10 container h-[600px] md:h-0">
+        <div className="flex flex-col px-5 md:px-0 md:items-start justify-between md:flex-row md:justify-around md:w-[80%] md:float-right mt-10 container h-[600px] md:h-0 font-abc">
           <div className="md:w-64 rounded-md shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>

@@ -31,7 +31,7 @@ const Table = () => {
     Navigate("/updateExpense/" + id);
   };
   return (
-    <div className="md:w-[80%] md:float-right md:px-4">
+    <div className="md:w-[80%] md:float-right md:px-4 font-abc">
       {/*=== TOP HEADER ===*/}
       <main>
         <div className="flex justify-between container mx-auto mt-6 px-4">
@@ -99,7 +99,7 @@ const Table = () => {
               <td>{data.Date}</td>
               <td>{data.Amount}</td>
               <td>
-                <input type="file" />
+                <p>file</p>
               </td>
               <td>
                 <button

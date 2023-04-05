@@ -9,7 +9,6 @@ const Login = () => {
   const [error, setError] = useState(false);
   const Navigate = useNavigate();
 
-  // const Navigate = useNavigate();
   const Login = async (e) => {
     e.preventDefault();
     try {
@@ -21,11 +20,11 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[#353c4e] min-h-screen">
+    <div className="bg-[#353c4e] min-h-screen font-abc">
       <div className="container flex flex-col items-center justify-center h-screen mx-auto px-5">
         <form className="w-full max-w-md bg-white flex flex-col justify-center items-left rounded-md p-6 space-y-3">
-          <h1 className="font-semibold text-2xl ">Sign In to your account</h1>
-          <label>Your Email</label>
+          <h1 className="font-extrabold text-2xl ">Sign In to your account</h1>
+          <label className="font-semibold">Your Email</label>
           <input
             type="email"
             placeholder="Enter Email"
@@ -34,7 +33,7 @@ const Login = () => {
               setLogin(e.target.value);
             }}
           />
-          <label>Password</label>
+          <label className="font-semibold">Password</label>
           <input
             type="password"
             placeholder="Enter Password"
@@ -46,12 +45,14 @@ const Login = () => {
           <div className="flex justify-between">
             <span className="flex space-x-2 items-center">
               <input type="checkbox" className="w-4 h-4" />
-              <p>Remember me</p>
+              <p className="font-semibold">Remember me</p>
             </span>
-            <a href="#">Forgot Password ?</a>
+            <a href="#" className="font-semibold">
+              Forgot Password ?
+            </a>
           </div>
           <button
-            className="bg-green-500 p-3 rounded text-white"
+            className="bg-[rgba(0,255,0,0.2)] border-green-700 border-2  p-3 rounded text-green-900 font-semibold"
             onClick={Login}
           >
             Sign In
@@ -62,7 +63,9 @@ const Login = () => {
               SignUp
             </Link>
             {error && (
-              <div className="text-red-500">Wrong Email or Password</div>
+              <div className="text-red-500 font-semibold">
+                Wrong Email or Password
+              </div>
             )}
           </p>
         </form>

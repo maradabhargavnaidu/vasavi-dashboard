@@ -14,7 +14,9 @@ const StudentComponent = () => {
 
   const getStudents = async () => {
     const data = await getDocs(studentCollection);
-    setStudents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setStudents(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
   };
   //   const deleteStudent = async (id) => {
   //     const Expensedoc = doc(db, "Students", id);
@@ -34,43 +36,53 @@ const StudentComponent = () => {
   const columns = [
     {
       name: "No",
-      selector: (row) => row.index,
+      selector: (row) => row.index + 1,
+      sortable: true,
     },
     {
       name: "Name",
       selector: (row) => row.name,
+      sortable: true,
     },
     {
       name: "Roll No",
       selector: (row) => row.rollNo,
+      sortable: true,
     },
     {
       name: "Education Type",
       selector: (row) => row.eduType,
+      sortable: true,
     },
     {
       name: "Batch",
       selector: (row) => row.batch,
+      sortable: true,
     },
     {
       name: "Availing Bus",
       selector: (row) => row.availingBus,
+      sortable: true,
     },
     {
       name: "Route",
       selector: (row) => row.route,
+      sortable: true,
     },
     {
       name: "Amount",
       selector: (row) => row.amount,
+      sortable: true,
     },
     {
       name: "Mobile",
       selector: (row) => row.mobile,
+      sortable: true,
     },
     {
       name: "Paid",
       selector: (row) => row.paid,
+      sortable: true,
     },
   ];
   return (

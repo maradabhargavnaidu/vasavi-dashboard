@@ -14,7 +14,9 @@ const DrComponent = () => {
 
   const getDrivers = async () => {
     const data = await getDocs(driverCollection);
-    setDrivers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setDrivers(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
   };
   const updatedriver = (id) => {
     Navigate("/updatedriver/" + id);
@@ -29,31 +31,38 @@ const DrComponent = () => {
   const columns = [
     {
       name: "No",
-      selector: (row) => row.index,
+      selector: (row) => row.index + 1,
+      sortable: true,
     },
     {
       name: "Full Name",
       selector: (row) => row.fullName,
+      sortable: true,
     },
     {
       name: "Gender",
       selector: (row) => row.gender,
+      sortable: true,
     },
     {
       name: "Age",
       selector: (row) => row.age,
+      sortable: true,
     },
     {
       name: "Phone",
       selector: (row) => row.phone,
+      sortable: true,
     },
     {
       name: "LicenseNo",
       selector: (row) => row.licenseNo,
+      sortable: true,
     },
     {
       name: "Address",
       selector: (row) => row.address,
+      sortable: true,
     },
   ];
   return (

@@ -14,7 +14,9 @@ const BusComponent = () => {
 
   const getBuses = async () => {
     const data = await getDocs(busCollection);
-    setBuses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setBuses(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
   };
   //   const deleteBus = async (id) => {
   //     const busdoc = doc(db, "Buses", id);
@@ -34,23 +36,28 @@ const BusComponent = () => {
   const columns = [
     {
       name: "NO",
-      selector: (row) => row.index,
+      selector: (row) => row.index + 1,
+      sortable: true,
     },
     {
       name: "BusNo",
       selector: (row) => row.busNo,
+      sortable: true,
     },
     {
       name: "RegistrationNo",
       selector: (row) => row.RegistrationNo,
+      sortable: true,
     },
     {
       name: "Route",
       selector: (row) => row.route,
+      sortable: true,
     },
     {
       name: "Bus Condition",
       selector: (row) => row.busCondition,
+      sortable: true,
     },
   ];
   return (

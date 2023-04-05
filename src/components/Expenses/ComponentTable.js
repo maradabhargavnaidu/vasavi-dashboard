@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
+import Export from "react-data-table-component";
+import downloadCSV from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +13,11 @@ const ComponentTable = () => {
   const [expRecord, setExpRecord] = useState();
   const [userInfo, setUserInfo] = useState();
   const Navigate = useNavigate();
+  const Export = ({ onExport }) => (
+    <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
+      Download Report <i class="fa-solid fa-download"></i>
+    </button>
+  );
 
   const expenseCollection = collection(db, "Expenses");
   function filteredItems(e) {
@@ -24,7 +31,9 @@ const ComponentTable = () => {
   };
   const getExpenses = async () => {
     const data = await getDocs(expenseCollection);
-    setExpenses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setExpenses(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
   };
   useEffect(() => {
     getExpenses();
@@ -36,7 +45,7 @@ const ComponentTable = () => {
   const columns = [
     {
       name: "No",
-      selector: (row) => row.index,
+      selector: (row) => row.index + 1,
       sortable: true,
     },
     {
@@ -123,12 +132,7 @@ const ComponentTable = () => {
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <Link
-            to="/"
-            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
-          >
-            Download Report <i class="fa-solid fa-download"></i>
-          </Link>
+          <Export />
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">

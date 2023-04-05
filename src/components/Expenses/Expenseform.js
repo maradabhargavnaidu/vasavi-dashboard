@@ -38,6 +38,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Bus Number:</label>
               <input
+                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -50,6 +51,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Expense Type:</label>
               <select
+                required
                 className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
                   setExpenseType(e.target.value);
@@ -67,6 +69,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Repair Type:</label>
               <input
+                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -79,6 +82,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Driver:</label>
               <input
+                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -94,6 +98,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Date:</label>
               <input
+                required
                 type="date"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -106,6 +111,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Amount:</label>
               <input
+                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -120,6 +126,7 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-center">
               <label className="font-medium">Upload Bill:</label>
               <input
+                required
                 type="file"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] py-3"
                 onChange={(e) => {

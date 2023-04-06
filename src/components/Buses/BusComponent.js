@@ -6,19 +6,57 @@ import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-
+import styled, { keyframes } from "styled-components";
 const BusComponent = () => {
+  // SETTING BUS DATA
   const [buses, setBuses] = useState([]);
+  // SETTING USER DATA
   const [userInfo, setUserInfo] = useState();
+  // CONNECTS TO DATABASE OF BUSES
   const busCollection = collection(db, "Buses");
+  // USING FOR EXPORTING FILE
   const tableRef = useRef(null);
+  // USING FOR NAVIGATE TO UPDATE
   const Navigate = useNavigate();
+  // USING FOR LOADER
+  const [pending, setPending] = useState(true);
+  // FUCTION TO SET DATA IN BUSES
   const getBuses = async () => {
     const data = await getDocs(busCollection);
     setBuses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
+    setPending(false);
   };
+  //LOADER DESIGN
+  const CustomLoader = () => (
+    <div style={{ padding: "24px" }}>
+      <Spinner />
+    </div>
+  );
+  const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+ }
+
+  to {
+    transform: rotate(360deg);  }
+`;
+  //SPINNER
+  const Spinner = styled.div`
+    margin: 16px;
+    animation: ${rotate360} 1s linear infinite;
+    transform: translateZ(0);
+    border-top: 2px solid grey;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid grey;
+    border-left: 4px solid black;
+    background: transparent;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  `;
+  //REACT-TABLE-COMPONENT TABLE SHOWING WAY
   const columns = [
     {
       name: "NO",
@@ -71,15 +109,18 @@ const BusComponent = () => {
       ),
     },
   ];
-
+  //FUNCTION TO DELETE ANY BUS ONLY FOR ADMINS
   const deleteBus = async (id) => {
     const busdoc = doc(db, "Buses", id);
     await deleteDoc(busdoc);
     window.location.reload();
   };
+  //FUNCTION TO UPDATE THE BUS INFORMATION ONLY FOR ADMINS
   const update = (id) => {
     Navigate("/updatebus/" + id);
   };
+
+  //SIDE EFFECTS
   useEffect(() => {
     getBuses();
     onAuthStateChanged(auth, (currentUser) => {
@@ -138,18 +179,18 @@ const BusComponent = () => {
           selectableRows
           fixedHeader
           pagination
+          progressPending={pending}
+          progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
       <table className="hidden" ref={tableRef}>
         <tr>
-          {/*=== HEADING OF TABLE ===*/}
           <th className="py-5">Serial No</th>
           <th>Bus Number</th>
           <th>Registration Number</th>
           <th>Route</th>
           <th>Bus Condition</th>
         </tr>
-        {/* RENDERING DRIVER DATA ON WEBSITE */}
         {buses.map((data, index) => (
           <tr>
             <td className="py-5">{index + 1}</td>

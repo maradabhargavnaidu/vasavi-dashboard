@@ -6,19 +6,46 @@ import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-// import { columns } from "./ExpenseColumns";
+import styled, { keyframes } from "styled-components";
 
 const ComponentTable = () => {
   const [expenses, setExpenses] = useState([]);
   const [userInfo, setUserInfo] = useState();
   const tableRef = useRef(null);
+  const [pending, setPending] = useState(true);
   const Navigate = useNavigate();
   const deleteExpense = async (id) => {
     const Expensedoc = doc(db, "Expenses", id);
     await deleteDoc(Expensedoc);
     window.location.reload();
   };
+  const CustomLoader = () => (
+    <div style={{ padding: "24px" }}>
+      <Spinner />
+    </div>
+  );
+  const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+ }
 
+  to {
+    transform: rotate(360deg);  }
+`;
+
+  const Spinner = styled.div`
+    margin: 16px;
+    animation: ${rotate360} 1s linear infinite;
+    transform: translateZ(0);
+    border-top: 2px solid grey;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid grey;
+    border-left: 4px solid black;
+    background: transparent;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  `;
   const columns = [
     {
       name: "No",
@@ -98,6 +125,7 @@ const ComponentTable = () => {
     setExpenses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
+    setPending(false);
   };
   useEffect(() => {
     getExpenses();
@@ -150,13 +178,15 @@ const ComponentTable = () => {
           </DownloadTableExcel>
         </div>
       </div>
-      <div className="container mx-auto md:w-[80%] float-right shadow-sm shadow-gray-400">
+      <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}
           data={expenses}
           selectableRows
           fixedHeader
           pagination
+          progressPending={pending}
+          progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
 

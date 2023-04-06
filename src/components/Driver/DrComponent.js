@@ -6,19 +6,47 @@ import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import styled, { keyframes } from "styled-components";
 
 const DrComponent = () => {
   const Navigate = useNavigate();
   const [drivers, setDrivers] = useState([]);
   const driverCollection = collection(db, "Drivers");
   const [userInfo, setUserInfo] = useState();
+  const [pending, setPending] = useState(true);
   const tableRef = useRef(null);
   const deleteDriver = async (id) => {
     const driverdoc = doc(db, "Drivers", id);
     await deleteDoc(driverdoc);
     window.location.reload();
   };
+  const CustomLoader = () => (
+    <div style={{ padding: "24px" }}>
+      <Spinner />
+    </div>
+  );
+  const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+ }
 
+  to {
+    transform: rotate(360deg);  }
+`;
+
+  const Spinner = styled.div`
+    margin: 16px;
+    animation: ${rotate360} 1s linear infinite;
+    transform: translateZ(0);
+    border-top: 2px solid grey;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid grey;
+    border-left: 4px solid black;
+    background: transparent;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  `;
   const columns = [
     {
       name: "No",
@@ -89,6 +117,7 @@ const DrComponent = () => {
     setDrivers(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
+    setPending(false);
   };
   const updatedriver = (id) => {
     Navigate("/updatedriver/" + id);
@@ -152,6 +181,8 @@ const DrComponent = () => {
           selectableRows
           fixedHeader
           pagination
+          progressPending={pending}
+          progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
       {/* DATA TO DOWNLOAD IN EXCEL SHEET */}

@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { collection, getCountFromServer } from "firebase/firestore";
 import { db } from "../../firebase-config";
+import styled, { keyframes } from "styled-components";
 
 const MainBar = () => {
-  const [Loading, setLoading] = useState(false);
+  const [expLoading, setExpLoading] = useState(true);
+  const [busLoading, setBusLoading] = useState(true);
+  const [driverLoading, setDriverLoading] = useState(true);
+  const [studentLoading, setStudentLoading] = useState(true);
   const [buscount, setBusCount] = useState("");
+
   const [drivercount, setDrivercount] = useState("");
   const [studentcount, setStudentcount] = useState("");
   const [expensecount, setExpensecount] = useState("");
@@ -12,24 +17,55 @@ const MainBar = () => {
   const driverCollection = collection(db, "Drivers");
   const studentCollection = collection(db, "Students");
   const expenseCollection = collection(db, "Expenses");
+
   const getExpensecount = async () => {
-    setLoading(true);
+    // setLoading(true);
     const expensecount = await getCountFromServer(expenseCollection);
     setExpensecount(expensecount.data().count);
-    setLoading(false);
+    setExpLoading(false);
   };
   const getStudentcount = async () => {
     const studentscount = await getCountFromServer(studentCollection);
     setStudentcount(studentscount.data().count);
+    setStudentLoading(false);
   };
   const getDrivercount = async () => {
     const driverscount = await getCountFromServer(driverCollection);
     setDrivercount(driverscount.data().count);
+    setDriverLoading(false);
   };
   const getBuscount = async () => {
     const busescounts = await getCountFromServer(busCollection);
     setBusCount(busescounts.data().count);
+    setBusLoading(false);
   };
+  const CustomLoader = () => (
+    <div>
+      <Spinner />
+    </div>
+  );
+  const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+ }
+
+  to {
+    transform: rotate(360deg);  }
+`;
+  //SPINNER
+  const Spinner = styled.div`
+    // margin: 16px;
+    animation: ${rotate360} 1s linear infinite;
+    transform: translateZ(0);
+    border-top: 4px solid gray;
+    border-right: 4px solid gray;
+    border-bottom: 4px solid gray;
+    border-left: 4px solid black;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  `;
   useEffect(() => {
     getBuscount();
     getDrivercount();
@@ -44,7 +80,7 @@ const MainBar = () => {
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
                 <h3 className="text-3xl text-[#fe9365] font-medium">
-                  {Loading ? <p className="text-sm">Loading...</p> : ""}
+                  {busLoading ? <CustomLoader /> : ""}
                   {buscount}
                 </h3>
                 <h6 className="text-gray-400">Buses</h6>
@@ -60,7 +96,7 @@ const MainBar = () => {
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
                 <h3 className="text-3xl text-[#0ac282] font-medium">
-                  {Loading ? <p className="text-sm">Loading...</p> : ""}
+                  {expLoading ? <CustomLoader /> : ""}
                   {expensecount}
                 </h3>
                 <h6 className="text-gray-400">Expenses</h6>
@@ -76,7 +112,7 @@ const MainBar = () => {
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
                 <h3 className="text-3xl text-[#eb3422] font-medium">
-                  {Loading ? <p className="text-sm">Loading...</p> : ""}
+                  {studentLoading ? <CustomLoader /> : ""}
                   {studentcount}
                 </h3>
                 <h6 className="text-gray-400">Students</h6>
@@ -92,7 +128,7 @@ const MainBar = () => {
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
                 <h3 className="text-3xl text-[#01a9ac] font-medium">
-                  {Loading ? <p className="text-sm">Loading...</p> : ""}
+                  {driverLoading ? <CustomLoader /> : ""}
                   {drivercount}
                 </h3>
                 <h6 className="text-gray-400">Drivers</h6>

@@ -1,5 +1,4 @@
 import React from "react";
-import Table from "./DriverTable";
 import DrComponent from "./DrComponent";
 import Mainnav from "../MainDashboard/Mainnav";
 const Dashboard = () => {

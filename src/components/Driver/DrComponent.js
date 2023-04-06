@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
@@ -13,23 +13,12 @@ const DrComponent = () => {
   const driverCollection = collection(db, "Drivers");
   const [userInfo, setUserInfo] = useState();
   const tableRef = useRef(null);
-
-  const getDrivers = async () => {
-    const data = await getDocs(driverCollection);
-    setDrivers(
-      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
-    );
-  };
-  const updatedriver = (id) => {
-    Navigate("/updatedriver/" + id);
+  const deleteDriver = async (id) => {
+    const driverdoc = doc(db, "Drivers", id);
+    await deleteDoc(driverdoc);
+    window.location.reload();
   };
 
-  useEffect(() => {
-    getDrivers();
-    onAuthStateChanged(auth, (currentUser) => {
-      setUserInfo(currentUser);
-    });
-  }, []);
   const columns = [
     {
       name: "No",
@@ -66,7 +55,52 @@ const DrComponent = () => {
       selector: (row) => row.address,
       sortable: true,
     },
+    {
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            className={
+              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              updatedriver(row.id);
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className={
+              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              deleteDriver(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
+    },
   ];
+
+  const getDrivers = async () => {
+    const data = await getDocs(driverCollection);
+    setDrivers(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
+  };
+  const updatedriver = (id) => {
+    Navigate("/updatedriver/" + id);
+  };
+
+  useEffect(() => {
+    getDrivers();
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+    });
+  }, []);
+
   return (
     <>
       <main>
@@ -110,14 +144,17 @@ const DrComponent = () => {
           </DownloadTableExcel>
         </div>
       </div>
+      {/* TABLE */}
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}
           data={drivers}
           selectableRows
           fixedHeader
+          pagination
         ></DataTable>
       </div>
+      {/* DATA TO DOWNLOAD IN EXCEL SHEET */}
       <table className="hidden" ref={tableRef}>
         <tr>
           {/*=== HEADING OF TABLE ===*/}

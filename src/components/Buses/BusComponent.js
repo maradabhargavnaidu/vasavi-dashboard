@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
@@ -13,28 +13,12 @@ const BusComponent = () => {
   const busCollection = collection(db, "Buses");
   const tableRef = useRef(null);
   const Navigate = useNavigate();
-
   const getBuses = async () => {
     const data = await getDocs(busCollection);
     setBuses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
   };
-  //   const deleteBus = async (id) => {
-  //     const busdoc = doc(db, "Buses", id);
-  //     await deleteDoc(busdoc);
-  //     window.location.reload();
-  //   };
-  //   const update = (id) => {
-  //     Navigate("/updatebus/" + id);
-  //   };
-  useEffect(() => {
-    getBuses();
-    onAuthStateChanged(auth, (currentUser) => {
-      setUserInfo(currentUser);
-      console.log("executing");
-    });
-  }, []);
   const columns = [
     {
       name: "NO",
@@ -61,7 +45,49 @@ const BusComponent = () => {
       selector: (row) => row.busCondition,
       sortable: true,
     },
+    {
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            onClick={() => update(row.id)}
+            className={
+              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className={
+              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              deleteBus(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
+    },
   ];
+
+  const deleteBus = async (id) => {
+    const busdoc = doc(db, "Buses", id);
+    await deleteDoc(busdoc);
+    window.location.reload();
+  };
+  const update = (id) => {
+    Navigate("/updatebus/" + id);
+  };
+  useEffect(() => {
+    getBuses();
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+      console.log("executing");
+    });
+  }, []);
+
   return (
     <>
       <main>
@@ -111,6 +137,7 @@ const BusComponent = () => {
           data={buses}
           selectableRows
           fixedHeader
+          pagination
         ></DataTable>
       </div>
       <table className="hidden" ref={tableRef}>

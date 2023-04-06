@@ -1,5 +1,4 @@
 import React from "react";
-import StudentTable from "./StudentTable";
 import Mainnav from "../MainDashboard/Mainnav";
 import StudentComponent from "./StudentComponent";
 const Studentsdashboard = () => {

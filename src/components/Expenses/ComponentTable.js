@@ -1,50 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+// import { columns } from "./ExpenseColumns";
 
 const ComponentTable = () => {
   const [expenses, setExpenses] = useState([]);
-  const [expRecord, setExpRecord] = useState([]);
   const [userInfo, setUserInfo] = useState();
   const tableRef = useRef(null);
   const Navigate = useNavigate();
-  // const Export = ({ onExport }) => (
-  //   <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
-  //     Download Report <i class="fa-solid fa-download"></i>
-  //   </button>
-  // );
+  const deleteExpense = async (id) => {
+    const Expensedoc = doc(db, "Expenses", id);
+    await deleteDoc(Expensedoc);
+    window.location.reload();
+  };
 
-  const expenseCollection = collection(db, "Expenses");
-  const updateExpense = (id) => {
-    Navigate("/updateExpense/" + id);
-  };
-  const getExpenses = async () => {
-    const data = await getDocs(expenseCollection);
-    setExpenses(
-      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
-    );
-  };
-  const getTableExpenses = async () => {
-    const tabledata = await getDocs(expenseCollection);
-    setExpRecord(tabledata.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-  useEffect(() => {
-    getExpenses();
-    getTableExpenses();
-    onAuthStateChanged(auth, (currentUser) => {
-      setUserInfo(currentUser);
-      console.log("executing");
-    });
-  }, []);
   const columns = [
     {
-      id: "1",
-
       name: "No",
       selector: (row) => row.index + 1,
       sortable: true,
@@ -85,21 +61,52 @@ const ComponentTable = () => {
       sortable: true,
     },
     {
-      name: "update",
-      selector: (row) => {
-        <button
-          className={
-            "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-          }
-          onClick={(row) => {
-            updateExpense(row.id);
-          }}
-        >
-          <i class="fa-solid fa-pencil"></i>
-        </button>;
-      },
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            className={
+              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              updateExpense(row.id);
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className={
+              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              deleteExpense(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
     },
   ];
+
+  const expenseCollection = collection(db, "Expenses");
+  const updateExpense = (id) => {
+    Navigate("/updateExpense/" + id);
+  };
+  const getExpenses = async () => {
+    const data = await getDocs(expenseCollection);
+    setExpenses(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
+  };
+  useEffect(() => {
+    getExpenses();
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+      console.log("executing");
+    });
+  }, []);
+
   return (
     <>
       <main>
@@ -143,14 +150,16 @@ const ComponentTable = () => {
           </DownloadTableExcel>
         </div>
       </div>
-      <div className="container mx-auto md:w-[80%] float-right">
+      <div className="container mx-auto md:w-[80%] float-right shadow-sm shadow-gray-400">
         <DataTable
           columns={columns}
           data={expenses}
           selectableRows
           fixedHeader
+          pagination
         ></DataTable>
       </div>
+
       <table className="hidden" ref={tableRef}>
         <tr>
           {/*=== HEADING OF TABLE ===*/}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
@@ -11,30 +11,14 @@ const StudentComponent = () => {
   const [students, setStudents] = useState([]);
   const [userInfo, setUserInfo] = useState();
   const studentCollection = collection(db, "Students");
-  const Navigate = useNavigate();
   const tableRef = useRef(null);
-
+  const Navigate = useNavigate();
   const getStudents = async () => {
     const data = await getDocs(studentCollection);
     setStudents(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
   };
-  //   const deleteStudent = async (id) => {
-  //     const Expensedoc = doc(db, "Students", id);
-  //     await deleteDoc(Expensedoc);
-  //     window.location.reload();
-  //   };
-  //   const updatestudent = (id) => {
-  //     Navigate("/updatestudent/" + id);
-  //   };
-  useEffect(() => {
-    getStudents();
-    onAuthStateChanged(auth, (currentUser) => {
-      setUserInfo(currentUser);
-      console.log("executing");
-    });
-  }, []);
   const columns = [
     {
       name: "No",
@@ -86,7 +70,50 @@ const StudentComponent = () => {
       selector: (row) => row.paid,
       sortable: true,
     },
+    {
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            className={
+              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              updatestudent(row.id);
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className={
+              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
+            }
+            onClick={() => {
+              deleteStudent(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
+    },
   ];
+
+  const deleteStudent = async (id) => {
+    const Expensedoc = doc(db, "Students", id);
+    await deleteDoc(Expensedoc);
+    window.location.reload();
+  };
+  const updatestudent = (id) => {
+    Navigate("/updatestudent/" + id);
+  };
+  useEffect(() => {
+    getStudents();
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+      console.log("executing");
+    });
+  }, []);
   return (
     <>
       <main>
@@ -116,7 +143,6 @@ const StudentComponent = () => {
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
-            {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <DownloadTableExcel
@@ -132,13 +158,14 @@ const StudentComponent = () => {
       </div>
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
-          className=""
           columns={columns}
           data={students}
           selectableRows
           fixedHeader
+          pagination
         ></DataTable>
       </div>
+      {/* DOWNLOADING TABLE IN EXCEL SHEET */}
       <table className="hidden" ref={tableRef}>
         <tr>
           {/*=== HEADING OF TABLE ===*/}

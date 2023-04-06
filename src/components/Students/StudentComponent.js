@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const StudentComponent = () => {
   const [students, setStudents] = useState([]);
   const [userInfo, setUserInfo] = useState();
   const studentCollection = collection(db, "Students");
   const Navigate = useNavigate();
+  const tableRef = useRef(null);
 
   const getStudents = async () => {
     const data = await getDocs(studentCollection);
@@ -117,12 +119,15 @@ const StudentComponent = () => {
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <Link
-            to="/"
-            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
+          <DownloadTableExcel
+            filename="Student Table"
+            sheet="Students"
+            currentTableRef={tableRef.current}
           >
-            Download Report <i class="fa-solid fa-download"></i>
-          </Link>
+            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
+              Download Report <i class="fa-solid fa-download"></i>
+            </button>
+          </DownloadTableExcel>
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">
@@ -134,6 +139,36 @@ const StudentComponent = () => {
           fixedHeader
         ></DataTable>
       </div>
+      <table className="hidden" ref={tableRef}>
+        <tr>
+          {/*=== HEADING OF TABLE ===*/}
+          <th className="py-5">Serial No</th>
+          <th>Name</th>
+          <th>RollNo</th>
+          <th>Education Type</th>
+          <th>Batch</th>
+          <th>Availing Bus</th>
+          <th>Route</th>
+          <th>Amount</th>
+          <th>MobileNo</th>
+          <th>Fees Paid</th>
+        </tr>
+        {/* RENDERING DRIVER DATA ON WEBSITE */}
+        {students.map((data, index) => (
+          <tr>
+            <td className="py-5">{index + 1}</td>
+            <td>{data.name}</td>
+            <td>{data.rollNo}</td>
+            <td>{data.eduType}</td>
+            <td>{data.batch}</td>
+            <td>{data.availingBus}</td>
+            <td>{data.route}</td>
+            <td>{data.amount}</td>
+            <td>{data.mobile}</td>
+            <td>{data.paid}</td>
+          </tr>
+        ))}
+      </table>
     </>
   );
 };

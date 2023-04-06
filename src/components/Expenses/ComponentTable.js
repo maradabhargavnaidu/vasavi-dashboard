@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
-import Export from "react-data-table-component";
-import downloadCSV from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const ComponentTable = () => {
-  const [expenses, setExpenses] = useState();
-  const [expRecord, setExpRecord] = useState();
+  const [expenses, setExpenses] = useState([]);
+  const [expRecord, setExpRecord] = useState([]);
   const [userInfo, setUserInfo] = useState();
+  const tableRef = useRef(null);
   const Navigate = useNavigate();
-  const Export = ({ onExport }) => (
-    <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
-      Download Report <i class="fa-solid fa-download"></i>
-    </button>
-  );
+  // const Export = ({ onExport }) => (
+  //   <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
+  //     Download Report <i class="fa-solid fa-download"></i>
+  //   </button>
+  // );
 
   const expenseCollection = collection(db, "Expenses");
-  function filteredItems(e) {
-    const newData = expenses.filter((row) => {
-      return row.BusNumber.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    setExpRecord(newData);
-  }
   const updateExpense = (id) => {
     Navigate("/updateExpense/" + id);
   };
@@ -35,8 +29,13 @@ const ComponentTable = () => {
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
   };
+  const getTableExpenses = async () => {
+    const tabledata = await getDocs(expenseCollection);
+    setExpRecord(tabledata.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
   useEffect(() => {
     getExpenses();
+    getTableExpenses();
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
       console.log("executing");
@@ -44,6 +43,8 @@ const ComponentTable = () => {
   }, []);
   const columns = [
     {
+      id: "1",
+
       name: "No",
       selector: (row) => row.index + 1,
       sortable: true,
@@ -127,23 +128,54 @@ const ComponentTable = () => {
               type="text"
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
-              onChange={filteredItems}
             />
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <Export />
+          <DownloadTableExcel
+            filename="expensestable"
+            sheet="expenses"
+            currentTableRef={tableRef.current}
+          >
+            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
+              Download Report <i class="fa-solid fa-download"></i>
+            </button>
+          </DownloadTableExcel>
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
-          className=""
           columns={columns}
           data={expenses}
           selectableRows
           fixedHeader
         ></DataTable>
       </div>
+      <table className="hidden" ref={tableRef}>
+        <tr>
+          {/*=== HEADING OF TABLE ===*/}
+          <th className="py-5">Serial No</th>
+          <th>Bus Number</th>
+          <th>Expense Type</th>
+          <th>Repair Type</th>
+          <th>Driver</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Upload Bill</th>
+        </tr>
+        {/* RENDERING DRIVER DATA ON WEBSITE */}
+        {expenses.map((data, index) => (
+          <tr className="shadow-sm shadow-gray-400  container">
+            <td>{index + 1}</td>
+            <td>{data.BusNumber}</td>
+            <td>{data.ExpenseType}</td>
+            <td>{data.RepairType}</td>
+            <td>{data.Driver}</td>
+            <td>{data.Date}</td>
+            <td>{data.Amount}</td>
+          </tr>
+        ))}
+      </table>
     </>
   );
 };

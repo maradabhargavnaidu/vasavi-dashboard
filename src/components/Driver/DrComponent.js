@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const DrComponent = () => {
   const Navigate = useNavigate();
   const [drivers, setDrivers] = useState([]);
   const driverCollection = collection(db, "Drivers");
   const [userInfo, setUserInfo] = useState();
+  const tableRef = useRef(null);
 
   const getDrivers = async () => {
     const data = await getDocs(driverCollection);
@@ -97,23 +99,49 @@ const DrComponent = () => {
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <Link
-            to="/"
-            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
+          <DownloadTableExcel
+            filename="Drivers Table"
+            sheet="Drivers"
+            currentTableRef={tableRef.current}
           >
-            Download Report <i class="fa-solid fa-download"></i>
-          </Link>
+            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
+              Download Report <i class="fa-solid fa-download"></i>
+            </button>
+          </DownloadTableExcel>
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
-          className=""
           columns={columns}
           data={drivers}
           selectableRows
           fixedHeader
         ></DataTable>
       </div>
+      <table className="hidden" ref={tableRef}>
+        <tr>
+          {/*=== HEADING OF TABLE ===*/}
+          <th>Serial No</th>
+          <th>Full Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Phone</th>
+          <th>License No</th>
+          <th>Address</th>
+        </tr>
+        {/* RENDERING DRIVER DATA ON WEBSITE */}
+        {drivers.map((data, index) => (
+          <tr>
+            <td className="py-5">{index + 1}</td>
+            <td>{data.fullName}</td>
+            <td>{data.gender}</td>
+            <td>{data.age}</td>
+            <td>{data.phone}</td>
+            <td>{data.licenseNo}</td>
+            <td>{data.address}</td>
+          </tr>
+        ))}
+      </table>
     </>
   );
 };

@@ -5,21 +5,29 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import styled, { keyframes } from "styled-components";
+import * as XLSX from "xlsx";
 
 const DrComponent = () => {
+  // NAVIGATING
   const Navigate = useNavigate();
+  // SETTING DRIVERS DATA
   const [drivers, setDrivers] = useState([]);
+  // SETTING EXCEL DATA
+  const [excelData, setExcelData] = useState([]);
+  // CONNECTS TO COLLECTION OF DRIVERS
   const driverCollection = collection(db, "Drivers");
+  // USER DETAILS
   const [userInfo, setUserInfo] = useState();
+  // LOADER
   const [pending, setPending] = useState(true);
-  const tableRef = useRef(null);
+  // DELETE DRIVER FUNCTION
   const deleteDriver = async (id) => {
     const driverdoc = doc(db, "Drivers", id);
     await deleteDoc(driverdoc);
     window.location.reload();
   };
+  // LOADER COMPONENT
   const CustomLoader = () => (
     <div style={{ padding: "24px" }}>
       <Spinner />
@@ -47,6 +55,7 @@ const DrComponent = () => {
     height: 80px;
     border-radius: 50%;
   `;
+  // DATA OF TABLE
   const columns = [
     {
       name: "No",
@@ -83,14 +92,44 @@ const DrComponent = () => {
       selector: (row) => row.address,
       sortable: true,
     },
-    {
+  ];
+  // FUNCTION TO FETCH DRIVERS DATA
+  const getDrivers = async () => {
+    const data = await getDocs(driverCollection);
+    setDrivers(
+      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
+    );
+    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    setPending(false);
+  };
+  // FUNCTION TO CONVERT JSON TO EXCEL DATA
+  const downloadExcel = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Drivers.xlsx");
+  };
+  // UPDATING DRIVER
+  const updatedriver = (id) => {
+    Navigate("/updatedriver/" + id);
+  };
+  // SIDE EFFECTS
+  useEffect(() => {
+    getDrivers();
+    onAuthStateChanged(auth, (currentUser) => {
+      setUserInfo(currentUser);
+    });
+  }, []);
+  // ADMIN ACTIONS
+  if (userInfo?.email === "admin@gmail.com") {
+    columns.push({
       name: "Action",
       cell: (row) => (
         <>
           <button
-            className={
-              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
+            className="px-1 "
             onClick={() => {
               updatedriver(row.id);
             }}
@@ -98,9 +137,7 @@ const DrComponent = () => {
             <i class="fa-solid fa-pencil"></i>
           </button>
           <button
-            className={
-              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
+            className="px-1 "
             onClick={() => {
               deleteDriver(row.id);
             }}
@@ -109,26 +146,8 @@ const DrComponent = () => {
           </button>
         </>
       ),
-    },
-  ];
-
-  const getDrivers = async () => {
-    const data = await getDocs(driverCollection);
-    setDrivers(
-      data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
-    );
-    setPending(false);
-  };
-  const updatedriver = (id) => {
-    Navigate("/updatedriver/" + id);
-  };
-
-  useEffect(() => {
-    getDrivers();
-    onAuthStateChanged(auth, (currentUser) => {
-      setUserInfo(currentUser);
     });
-  }, []);
+  }
 
   return (
     <>
@@ -162,15 +181,12 @@ const DrComponent = () => {
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <DownloadTableExcel
-            filename="Drivers Table"
-            sheet="Drivers"
-            currentTableRef={tableRef.current}
+          <button
+            onClick={() => downloadExcel(excelData)}
+            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
           >
-            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
-              Download Report <i class="fa-solid fa-download"></i>
-            </button>
-          </DownloadTableExcel>
+            Download Report <i class="fa-solid fa-download"></i>
+          </button>
         </div>
       </div>
       {/* TABLE */}

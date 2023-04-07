@@ -1,21 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import styled, { keyframes } from "styled-components";
+import * as XLSX from "xlsx";
+
 const BusComponent = () => {
   // SETTING BUS DATA
   const [buses, setBuses] = useState([]);
+  // SETTING ONLY EXCELDATA TO EXPORT
+  const [excelData, setExcelData] = useState([]);
+  // SETTING SELECTEDROWS
+  const [selectedRows, setSelectedRows] = React.useState(false);
   // SETTING USER DATA
   const [userInfo, setUserInfo] = useState();
   // CONNECTS TO DATABASE OF BUSES
   const busCollection = collection(db, "Buses");
-  // USING FOR EXPORTING FILE
-  const tableRef = useRef(null);
   // USING FOR NAVIGATE TO UPDATE
   const Navigate = useNavigate();
   // USING FOR LOADER
@@ -26,6 +29,7 @@ const BusComponent = () => {
     setBuses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
+    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
     setPending(false);
   };
   //LOADER DESIGN
@@ -57,7 +61,7 @@ const BusComponent = () => {
     border-radius: 50%;
   `;
   //REACT-TABLE-COMPONENT TABLE SHOWING WAY
-  const columns = [
+  const buscolumns = [
     {
       name: "NO",
       selector: (row) => row.index + 1,
@@ -83,32 +87,8 @@ const BusComponent = () => {
       selector: (row) => row.busCondition,
       sortable: true,
     },
-    {
-      name: "Action",
-      cell: (row) => (
-        <>
-          <button
-            onClick={() => update(row.id)}
-            className={
-              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
-          >
-            <i class="fa-solid fa-pencil"></i>
-          </button>
-          <button
-            className={
-              "px-1 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
-            onClick={() => {
-              deleteBus(row.id);
-            }}
-          >
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </>
-      ),
-    },
   ];
+
   //FUNCTION TO DELETE ANY BUS ONLY FOR ADMINS
   const deleteBus = async (id) => {
     const busdoc = doc(db, "Buses", id);
@@ -119,15 +99,44 @@ const BusComponent = () => {
   const update = (id) => {
     Navigate("/updatebus/" + id);
   };
+  // EXCEL DATA DOWNLOADING
+  const downloadExcel = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Buses.xlsx");
+  };
 
   //SIDE EFFECTS
   useEffect(() => {
     getBuses();
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
-      console.log("executing");
     });
   }, []);
+  // ADMIN ACTIONS
+  if (userInfo?.email === "admin@gmail.com") {
+    buscolumns.push({
+      name: "Actions",
+      cell: (row) => (
+        <>
+          <button onClick={() => update(row.id)} className="px-1 ">
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className={"px-1 "}
+            onClick={() => {
+              deleteBus(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
+    });
+  }
 
   return (
     <>
@@ -161,20 +170,17 @@ const BusComponent = () => {
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <DownloadTableExcel
-            filename="Buses Table"
-            sheet="Buses"
-            currentTableRef={tableRef.current}
+          <button
+            onClick={() => downloadExcel(excelData)}
+            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
           >
-            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
-              Download Report <i class="fa-solid fa-download"></i>
-            </button>
-          </DownloadTableExcel>
+            Download Report <i class="fa-solid fa-download"></i>
+          </button>
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
-          columns={columns}
+          columns={buscolumns}
           data={buses}
           selectableRows
           fixedHeader
@@ -183,24 +189,6 @@ const BusComponent = () => {
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
-      <table className="hidden" ref={tableRef}>
-        <tr>
-          <th className="py-5">Serial No</th>
-          <th>Bus Number</th>
-          <th>Registration Number</th>
-          <th>Route</th>
-          <th>Bus Condition</th>
-        </tr>
-        {buses.map((data, index) => (
-          <tr>
-            <td className="py-5">{index + 1}</td>
-            <td>{data.busNo}</td>
-            <td>{data.RegistrationNo}</td>
-            <td>{data.route}</td>
-            <td>{data.busCondition}</td>
-          </tr>
-        ))}
-      </table>
     </>
   );
 };

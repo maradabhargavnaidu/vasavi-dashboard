@@ -5,11 +5,12 @@ import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 import styled, { keyframes } from "styled-components";
 
 const StudentComponent = () => {
   const [students, setStudents] = useState([]);
+  const [excelData, setExcelData] = useState([]);
   const [userInfo, setUserInfo] = useState();
   const [pending, setPending] = useState(true);
   const studentCollection = collection(db, "Students");
@@ -20,6 +21,7 @@ const StudentComponent = () => {
     setStudents(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
+    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
     setPending(false);
   };
   const CustomLoader = () => (
@@ -100,33 +102,6 @@ const StudentComponent = () => {
       selector: (row) => row.paid,
       sortable: true,
     },
-    {
-      name: "Action",
-      cell: (row) => (
-        <>
-          <button
-            className={
-              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
-            onClick={() => {
-              updatestudent(row.id);
-            }}
-          >
-            <i class="fa-solid fa-pencil"></i>
-          </button>
-          <button
-            className={
-              "px-2 " + (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
-            }
-            onClick={() => {
-              deleteStudent(row.id);
-            }}
-          >
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </>
-      ),
-    },
   ];
 
   const deleteStudent = async (id) => {
@@ -139,12 +114,45 @@ const StudentComponent = () => {
   };
   useEffect(() => {
     getStudents();
-
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
       console.log("executing");
     });
   }, []);
+  const downloadExcel = (data) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Students.xlsx");
+  };
+  // ADMIN ACTIONS
+  if (userInfo?.email === "admin@gmail.com") {
+    columns.push({
+      name: "Action",
+      cell: (row) => (
+        <>
+          <button
+            className="px-2 "
+            onClick={() => {
+              updatestudent(row.id);
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+          <button
+            className="px-2 "
+            onClick={() => {
+              deleteStudent(row.id);
+            }}
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </>
+      ),
+    });
+  }
   return (
     <>
       <main>
@@ -176,15 +184,12 @@ const StudentComponent = () => {
             />
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
-          <DownloadTableExcel
-            filename="Student Table"
-            sheet="Students"
-            currentTableRef={tableRef.current}
+          <button
+            onClick={() => downloadExcel(excelData)}
+            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
           >
-            <button className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4">
-              Download Report <i class="fa-solid fa-download"></i>
-            </button>
-          </DownloadTableExcel>
+            Download Report <i class="fa-solid fa-download"></i>
+          </button>
         </div>
       </div>
       <div className="container mx-auto md:w-[80%] float-right">

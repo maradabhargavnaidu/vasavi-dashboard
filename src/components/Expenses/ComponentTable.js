@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
@@ -9,12 +9,21 @@ import * as XLSX from "xlsx";
 import styled, { keyframes } from "styled-components";
 
 const ComponentTable = () => {
+  // SETTING EXPENSES
   const [expenses, setExpenses] = useState([]);
+  // SEARCH DATA
+  const [search, setSearch] = useState(expenses);
+  // IF THERE IS DATA IN SEARCH IT WILL SET TO TRUE
+  const [data, setData] = useState(false);
+  // SETTING EXPENSES EXCELDATA
   const [excelData, setExcelData] = useState([]);
+  // SETTING USERINFO
   const [userInfo, setUserInfo] = useState();
-  const tableRef = useRef(null);
+  // LOADER
   const [pending, setPending] = useState(true);
+  // TO NAVIGATE
   const Navigate = useNavigate();
+  // DELETE FUNCTION
   const deleteExpense = async (id) => {
     const Expensedoc = doc(db, "Expenses", id);
     await deleteDoc(Expensedoc);
@@ -94,7 +103,7 @@ const ComponentTable = () => {
   const updateExpense = (id) => {
     Navigate("/updateExpense/" + id);
   };
-
+  // FUNCTION TO CHANGE JSON DATA TO EXCEL
   const downloadExcel = (data) => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -103,14 +112,17 @@ const ComponentTable = () => {
     XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "Expenses.xlsx");
   };
+  // FUNCTION TO GET EXPENSES FORM DATABASE
   const getExpenses = async () => {
     const data = await getDocs(expenseCollection);
     setExpenses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
     setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    // setSearch(expenses);
     setPending(false);
   };
+  // SIDE EFFECTS
   useEffect(() => {
     getExpenses();
     onAuthStateChanged(auth, (currentUser) => {
@@ -118,6 +130,16 @@ const ComponentTable = () => {
       console.log("executing");
     });
   }, []);
+
+  // FILTER FUNCTION
+  const Filter = (e) => {
+    const newData = expenses.filter((row) => {
+      return row.BusNumber.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setSearch(newData);
+    setData(true);
+  };
+
   //ADMIN ACTIONS
   if (userInfo?.email === "admin@gmail.com") {
     columns.push({
@@ -170,11 +192,11 @@ const ComponentTable = () => {
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
             <input
+              onChange={Filter}
               type="text"
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
-            {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
@@ -188,7 +210,7 @@ const ComponentTable = () => {
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}
-          data={expenses}
+          data={data ? search : expenses}
           selectableRows
           fixedHeader
           pagination
@@ -196,32 +218,6 @@ const ComponentTable = () => {
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
-
-      <table className="hidden" ref={tableRef}>
-        <tr>
-          {/*=== HEADING OF TABLE ===*/}
-          <th className="py-5">Serial No</th>
-          <th>Bus Number</th>
-          <th>Expense Type</th>
-          <th>Repair Type</th>
-          <th>Driver</th>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Upload Bill</th>
-        </tr>
-        {/* RENDERING DRIVER DATA ON WEBSITE */}
-        {expenses.map((data, index) => (
-          <tr className="shadow-sm shadow-gray-400  container">
-            <td>{index + 1}</td>
-            <td>{data.BusNumber}</td>
-            <td>{data.ExpenseType}</td>
-            <td>{data.RepairType}</td>
-            <td>{data.Driver}</td>
-            <td>{data.Date}</td>
-            <td>{data.Amount}</td>
-          </tr>
-        ))}
-      </table>
     </>
   );
 };

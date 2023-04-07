@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { db } from "../../firebase-config";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
@@ -9,13 +9,23 @@ import * as XLSX from "xlsx";
 import styled, { keyframes } from "styled-components";
 
 const StudentComponent = () => {
+  // STORING STUDENTS DATA
   const [students, setStudents] = useState([]);
+  // SEARCH DATA
+  const [search, setSearch] = useState();
+  // IF THERE IS DATA IN SEARCH IT WILL SET TO TRUE
+  const [data, setData] = useState(false);
+  // STORING STUDENTS DATA TO EXPORT IN EXCEL
   const [excelData, setExcelData] = useState([]);
+  // SETTING USERINFORMATION
   const [userInfo, setUserInfo] = useState();
+  // LOADER
   const [pending, setPending] = useState(true);
+  // CONNECTING TO STUDENTS TABLE IN FIREBASE
   const studentCollection = collection(db, "Students");
-  const tableRef = useRef(null);
+  // TO NAVIGATE
   const Navigate = useNavigate();
+  // FUNCTION TO GET STUDENTS DATA
   const getStudents = async () => {
     const data = await getDocs(studentCollection);
     setStudents(
@@ -103,15 +113,17 @@ const StudentComponent = () => {
       sortable: true,
     },
   ];
-
+  // FUNCTION TO DELETE STUDENT DATA
   const deleteStudent = async (id) => {
     const Expensedoc = doc(db, "Students", id);
     await deleteDoc(Expensedoc);
     window.location.reload();
   };
+  // FUNCTION TO UPDATE STUDENTS DATA
   const updatestudent = (id) => {
     Navigate("/updatestudent/" + id);
   };
+  // SIDE EFFECTS
   useEffect(() => {
     getStudents();
     onAuthStateChanged(auth, (currentUser) => {
@@ -119,6 +131,7 @@ const StudentComponent = () => {
       console.log("executing");
     });
   }, []);
+  // EXPORTING JSON DATA TO EXCEL
   const downloadExcel = (data) => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -153,6 +166,14 @@ const StudentComponent = () => {
       ),
     });
   }
+  // FILTER FUNCTION
+  const Filter = (e) => {
+    const newData = students.filter((row) => {
+      return row.name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setSearch(newData);
+    setData(true);
+  };
   return (
     <>
       <main>
@@ -163,7 +184,7 @@ const StudentComponent = () => {
           </h1>
           {/*=== NAVIGATES TO EXPENSES BASIC INFORMATION PAGE ===*/}
           <Link
-            to="/expense/create-expense"
+            to="/students/createstudent"
             className={
               "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
@@ -178,6 +199,7 @@ const StudentComponent = () => {
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
             <input
+              onChange={Filter}
               type="text"
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
@@ -195,7 +217,7 @@ const StudentComponent = () => {
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}
-          data={students}
+          data={data ? search : students}
           selectableRows
           fixedHeader
           pagination
@@ -203,37 +225,6 @@ const StudentComponent = () => {
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
-      {/* DOWNLOADING TABLE IN EXCEL SHEET */}
-      <table className="hidden" ref={tableRef}>
-        <tr>
-          {/*=== HEADING OF TABLE ===*/}
-          <th className="py-5">Serial No</th>
-          <th>Name</th>
-          <th>RollNo</th>
-          <th>Education Type</th>
-          <th>Batch</th>
-          <th>Availing Bus</th>
-          <th>Route</th>
-          <th>Amount</th>
-          <th>MobileNo</th>
-          <th>Fees Paid</th>
-        </tr>
-        {/* RENDERING DRIVER DATA ON WEBSITE */}
-        {students.map((data, index) => (
-          <tr>
-            <td className="py-5">{index + 1}</td>
-            <td>{data.name}</td>
-            <td>{data.rollNo}</td>
-            <td>{data.eduType}</td>
-            <td>{data.batch}</td>
-            <td>{data.availingBus}</td>
-            <td>{data.route}</td>
-            <td>{data.amount}</td>
-            <td>{data.mobile}</td>
-            <td>{data.paid}</td>
-          </tr>
-        ))}
-      </table>
     </>
   );
 };

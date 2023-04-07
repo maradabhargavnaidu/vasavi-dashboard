@@ -11,7 +11,7 @@ const MainDashboard = () => {
   const getExpenses = async () => {
     const data = await getDocs(expenseCollection);
     const expenseData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    console.log(expenseData);
+    // console.log(expenseData);
     setExpenseData({
       labels: expenseData.map((data) => data.Amount),
       datasets: [

@@ -13,6 +13,10 @@ const DrComponent = () => {
   const Navigate = useNavigate();
   // SETTING DRIVERS DATA
   const [drivers, setDrivers] = useState([]);
+  // SEARCH DATA
+  const [search, setSearch] = useState();
+  // IF THERE IS DATA IN SEARCH IT WILL SET TO TRUE
+  const [data, setData] = useState(false);
   // SETTING EXCEL DATA
   const [excelData, setExcelData] = useState([]);
   // CONNECTS TO COLLECTION OF DRIVERS
@@ -148,6 +152,14 @@ const DrComponent = () => {
       ),
     });
   }
+  // FILTER FUNCTION
+  const Filter = (e) => {
+    const newData = drivers.filter((row) => {
+      return row.fullName.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setSearch(newData);
+    setData(true);
+  };
 
   return (
     <>
@@ -159,7 +171,7 @@ const DrComponent = () => {
           </h1>
           {/*=== NAVIGATES TO EXPENSES BASIC INFORMATION PAGE ===*/}
           <Link
-            to="/expense/create-expense"
+            to="/driver/createdriver"
             className={
               "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
@@ -174,6 +186,7 @@ const DrComponent = () => {
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
             <input
+              onChange={Filter}
               type="text"
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
@@ -193,7 +206,7 @@ const DrComponent = () => {
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}
-          data={drivers}
+          data={data ? search : drivers}
           selectableRows
           fixedHeader
           pagination

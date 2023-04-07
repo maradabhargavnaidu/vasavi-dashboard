@@ -11,6 +11,10 @@ import * as XLSX from "xlsx";
 const BusComponent = () => {
   // SETTING BUS DATA
   const [buses, setBuses] = useState([]);
+  // SEARCH DATA
+  const [search, setSearch] = useState();
+  // IF THERE IS DATA IN SEARCH IT WILL SET TO TRUE
+  const [data, setData] = useState(false);
   // SETTING ONLY EXCELDATA TO EXPORT
   const [excelData, setExcelData] = useState([]);
   // SETTING SELECTEDROWS
@@ -137,6 +141,14 @@ const BusComponent = () => {
       ),
     });
   }
+  // FILTER FUNCTION
+  const Filter = (e) => {
+    const newData = buses.filter((row) => {
+      return row.busNo.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setSearch(newData);
+    setData(true);
+  };
 
   return (
     <>
@@ -148,7 +160,7 @@ const BusComponent = () => {
           </h1>
           {/*=== NAVIGATES TO EXPENSES BASIC INFORMATION PAGE ===*/}
           <Link
-            to="/expense/create-expense"
+            to="/buses/newbus"
             className={
               "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
@@ -163,6 +175,7 @@ const BusComponent = () => {
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
             <input
+              onChange={Filter}
               type="text"
               placeholder="Search"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
@@ -181,7 +194,7 @@ const BusComponent = () => {
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={buscolumns}
-          data={buses}
+          data={data ? search : buses}
           selectableRows
           fixedHeader
           pagination

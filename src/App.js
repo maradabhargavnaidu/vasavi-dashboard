@@ -62,7 +62,7 @@ function App() {
             <Route path="/updatestudent/:id" element={<Studentupdateform />} />
           </Route>
           <Route element={<AdminElement />}>
-            <Route path="/driver/createuser" element={<User />} />
+            <Route path="/driver/createdriver" element={<User />} />
             <Route path="/expense/create-expense" element={<Expense />} />
             <Route path="/buses/newbus" element={<Bus />} />
             <Route path="/students/createstudent" element={<Student />} />

@@ -201,31 +201,6 @@ const DrComponent = () => {
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
-      {/* DATA TO DOWNLOAD IN EXCEL SHEET */}
-      <table className="hidden" ref={tableRef}>
-        <tr>
-          {/*=== HEADING OF TABLE ===*/}
-          <th>Serial No</th>
-          <th>Full Name</th>
-          <th>Gender</th>
-          <th>Age</th>
-          <th>Phone</th>
-          <th>License No</th>
-          <th>Address</th>
-        </tr>
-        {/* RENDERING DRIVER DATA ON WEBSITE */}
-        {drivers.map((data, index) => (
-          <tr>
-            <td className="py-5">{index + 1}</td>
-            <td>{data.fullName}</td>
-            <td>{data.gender}</td>
-            <td>{data.age}</td>
-            <td>{data.phone}</td>
-            <td>{data.licenseNo}</td>
-            <td>{data.address}</td>
-          </tr>
-        ))}
-      </table>
     </>
   );
 };

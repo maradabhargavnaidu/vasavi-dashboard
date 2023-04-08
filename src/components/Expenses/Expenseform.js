@@ -2,16 +2,30 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
+import { storage } from "../../firebase-config";
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 const Expenseform = () => {
-  //STORING DATA IN VARIABLES
+  // STORING DATA
   const [busNo, setBusNo] = useState("");
   const [expenseType, setExpenseType] = useState("");
   const [repairType, setRepairType] = useState("");
   const [driver, setDriver] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
+  const [uploadFile, setUploadFile] = useState(null);
   const expenseCollection = collection(db, "Expenses");
+  // UPLOAD FILE FUNCTRION
+  const fileUpload = () => {
+    if (uploadFile == null) return;
+    const fileRef = ref(storage, `file/${uploadFile.name + busNo}`);
+    uploadBytes(fileRef, uploadFile)
+      .then(() => {
+        alert("File uploaded");
+      })
+      .catch((err) => console.log(err));
+  };
 
   // CREATING A NEW DRIVER
   const createExpense = async () => {
@@ -38,8 +52,8 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Bus Number:</label>
               <input
-                required
                 type="text"
+                required
                 className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
                   setBusNo(e.target.value);
@@ -51,7 +65,6 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Expense Type:</label>
               <select
-                required
                 className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
                   setExpenseType(e.target.value);
@@ -69,7 +82,6 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Repair Type:</label>
               <input
-                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -82,7 +94,6 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Driver:</label>
               <input
-                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -98,7 +109,6 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Date:</label>
               <input
-                required
                 type="date"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -111,7 +121,6 @@ const Expenseform = () => {
             <div className="flex flex-col justify-center items-start">
               <label className="font-medium">Amount:</label>
               <input
-                required
                 type="text"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
@@ -122,24 +131,25 @@ const Expenseform = () => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-around items-center">
-            {/*=== DATE ===*/}
+            {/*=== FILE ===*/}
             <div className="flex flex-col justify-center items-center">
               <label className="font-medium">Upload Bill:</label>
               <input
-                required
                 type="file"
                 className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] py-3"
                 onChange={(e) => {
-                  setDate(e.target.value);
+                  setUploadFile(e.target.files[0]);
                 }}
                 placeholder="Date"
               />
+              <button onClick={fileUpload}>upload</button>
             </div>
           </div>
         </form>
         {/*=== BACK AND SUBMIT BUTTONS ===*/}
         <div className=" md:text-right space-x-5 md:mt-20 md:mr-32 mt-10 text-center">
           {/*=== BACK BUTTON ===*/}
+
           <Link
             to="/expense"
             className="bg-gray-200 px-10 text-gray-600 rounded-md py-4"

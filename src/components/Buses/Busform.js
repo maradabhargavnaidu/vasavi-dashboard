@@ -9,7 +9,7 @@ const Busform = () => {
   const [RegistrationNo, setRegistrationNo] = useState("");
   const [route, setRoute] = useState("");
   const [busCondition, setBusCondition] = useState("");
-
+  // CONNECTING TO BUS COLLECTION
   const busCollection = collection(db, "Buses");
 
   // CREATING A NEW DRIVER

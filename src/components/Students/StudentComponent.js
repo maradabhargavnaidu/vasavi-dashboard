@@ -201,7 +201,7 @@ const StudentComponent = () => {
             <input
               onChange={Filter}
               type="text"
-              placeholder="Search"
+              placeholder="Search by Name"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
           </div>

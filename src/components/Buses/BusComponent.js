@@ -42,6 +42,7 @@ const BusComponent = () => {
       <Spinner />
     </div>
   );
+  // KEY FRAMES
   const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -177,7 +178,7 @@ const BusComponent = () => {
             <input
               onChange={Filter}
               type="text"
-              placeholder="Search"
+              placeholder="Search by Bus Number"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}

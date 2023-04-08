@@ -4,7 +4,9 @@ import ComponentTable from "./ComponentTable";
 const Expensedashboard = () => {
   return (
     <div>
+      {/* NAVBAR */}
       <Mainnav />
+      {/* DATA TABLE COMPONENT */}
       <ComponentTable />
     </div>
   );

@@ -11,7 +11,7 @@ const Infoform = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [licenseNo, setLicenseNo] = useState("");
-
+  // CONNECTING TO DRIVERS COLLECTION
   const driverCollection = collection(db, "Drivers");
 
   // CREATING A NEW DRIVER

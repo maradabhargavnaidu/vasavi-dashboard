@@ -4,7 +4,9 @@ import Busform from "./Busform";
 const Bus = () => {
   return (
     <div>
+      {/*=== NAVBAR ===*/}
       <Mainnav />
+      {/*=== ADDING FORM ==*/}
       <Busform />
     </div>
   );

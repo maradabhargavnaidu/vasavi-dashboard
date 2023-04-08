@@ -23,6 +23,7 @@ import Busupdateform from "./components/Buses/Busupdateform";
 import Infoupdateform from "./components/Driver/Infoupdateform";
 import Expenseupdateform from "./components/Expenses/Expenseupdateform";
 import Studentupdateform from "./components/Students/Studentupdateform";
+import Files from "./components/Expenses/Files";
 function App() {
   const [users, setUsers] = useState();
   // const Navigate = useNavigate();
@@ -60,6 +61,7 @@ function App() {
             <Route path="/students" element={<Studentsdashboard />} />
             <Route path="/updateExpense/:id" element={<Expenseupdateform />} />
             <Route path="/updatestudent/:id" element={<Studentupdateform />} />
+            <Route path="/expense/files" element={<Files />} />
           </Route>
           <Route element={<AdminElement />}>
             <Route path="/driver/createdriver" element={<User />} />

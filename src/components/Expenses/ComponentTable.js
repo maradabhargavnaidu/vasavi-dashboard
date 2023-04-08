@@ -34,6 +34,7 @@ const ComponentTable = () => {
       <Spinner />
     </div>
   );
+  // KEYFRAMES
   const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -42,7 +43,7 @@ const ComponentTable = () => {
   to {
     transform: rotate(360deg);  }
 `;
-
+  // SPINNER
   const Spinner = styled.div`
     margin: 16px;
     animation: ${rotate360} 1s linear infinite;
@@ -56,6 +57,7 @@ const ComponentTable = () => {
     height: 80px;
     border-radius: 50%;
   `;
+  // COLUMNS TO ADD IN DATATABLE COMPONENT
   const columns = [
     {
       name: "No",
@@ -92,14 +94,10 @@ const ComponentTable = () => {
       selector: (row) => row.Amount,
       sortable: true,
     },
-    {
-      name: "Upload Bill",
-      selector: (row) => row.Bill,
-      sortable: true,
-    },
   ];
-
+  // CONNECTS TO EXPENSE COLLECTION IN FIREBASE
   const expenseCollection = collection(db, "Expenses");
+  // NAVIGATES TO EXPENSE UPDATE FORM
   const updateExpense = (id) => {
     Navigate("/updateExpense/" + id);
   };
@@ -194,10 +192,16 @@ const ComponentTable = () => {
             <input
               onChange={Filter}
               type="text"
-              placeholder="Search"
+              placeholder="Search by Bus Number"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
           </div>
+          <Link
+            to="/expense/files"
+            className="bg-[rgba(255,153,0,0.2)] flex items-center border-gray-600 border-2 text-gray-600 px-3 hover:bg-[rgba(255,153,0,0.1)] py-0 rounded-md"
+          >
+            <i class="fa-solid fa-eye"></i> Bill
+          </Link>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
             onClick={() => downloadExcel(excelData)}
@@ -207,6 +211,7 @@ const ComponentTable = () => {
           </button>
         </div>
       </div>
+      {/* DATA TABLE */}
       <div className="container mx-auto md:w-[80%] float-right">
         <DataTable
           columns={columns}

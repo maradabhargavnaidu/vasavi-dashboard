@@ -4,7 +4,9 @@ import BusComponent from "./BusComponent";
 const Busdashboard = () => {
   return (
     <div>
+      {/* NAVBAR */}
       <Mainnav />
+      {/* TABLE OF BUS */}
       <BusComponent />
     </div>
   );

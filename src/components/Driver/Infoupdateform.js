@@ -4,9 +4,11 @@ import { db } from "../../firebase-config";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import Mainnav from "../MainDashboard/Mainnav";
 const Updateinfoform = () => {
-  //STORING DATA IN VARIABLES
+  // GETTING DRIVER ID FROM PARAMS
   const { id } = useParams();
+  // STORING DRIVER DATA BY SELECTED ID
   const [driver, setDriver] = useState({});
+  // CONNECTS TO SELECTED ID DOCUMENT IN DRIVERS COLLECTION
   const driverCollection = doc(db, "Drivers", id);
   //UPDATE FUNCTION
   const updateDriver = async () => {
@@ -20,6 +22,7 @@ const Updateinfoform = () => {
       licenseNo: driver.licenseNo,
     });
   };
+  // SIDE EFFECTS
   useEffect(() => {
     const DriverData = async () => {
       const data = await getDoc(driverCollection);

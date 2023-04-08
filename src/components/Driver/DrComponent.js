@@ -37,6 +37,7 @@ const DrComponent = () => {
       <Spinner />
     </div>
   );
+  // KEYFRAMES
   const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -45,7 +46,7 @@ const DrComponent = () => {
   to {
     transform: rotate(360deg);  }
 `;
-
+  // SPINNER
   const Spinner = styled.div`
     margin: 16px;
     animation: ${rotate360} 1s linear infinite;
@@ -188,7 +189,7 @@ const DrComponent = () => {
             <input
               onChange={Filter}
               type="text"
-              placeholder="Search"
+              placeholder="Search by Name"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60"
             />
             {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}

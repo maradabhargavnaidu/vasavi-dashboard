@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { db } from "../../firebase-config";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import Mainnav from "../MainDashboard/Mainnav";
+
 const Updateinfoform = () => {
   // GETTING DRIVER ID FROM PARAMS
   const { id } = useParams();

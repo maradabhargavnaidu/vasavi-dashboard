@@ -28,11 +28,16 @@ const Register = () => {
   };
   return (
     <div>
-      <div className="bg-[#353c4e] min-h-screen font-abc">
+      <div className="bg-blue-600 min-h-screen font-bcd">
         <div className="container flex flex-col items-center justify-center h-screen mx-auto px-5">
+          <h1 className="text-3xl text-white mb-2 font-semibold">
+            Welcome !! Let's begin
+          </h1>
           <form className="w-full max-w-md bg-white flex flex-col justify-center items-left rounded-md p-6 space-y-3">
-            <h1 className="font-extrabold text-2xl">Create your account</h1>
-            <label className="font-semibold">Your Email</label>
+            <h1 className="font-extrabold text-2xl text-gray-700">
+              Create your account
+            </h1>
+            <label className="font-semibold text-[#4f5d73]">Your Email</label>
             <input
               type="email"
               placeholder="Enter Email"
@@ -41,7 +46,7 @@ const Register = () => {
                 setRegisterEmail(e.target.value);
               }}
             />
-            <label className="font-semibold">Password</label>
+            <label className="font-semibold text-[#4f5d73]">Password</label>
             <input
               type="password"
               placeholder="Enter Password"
@@ -53,21 +58,21 @@ const Register = () => {
             <div className="flex justify-between">
               <span className="flex space-x-2 items-center">
                 <input type="checkbox" className="w-4 h-4" />
-                <p className="font-semibold">Remember me</p>
+                <p className="font-semibold text-[#4f5d73]">Remember me</p>
               </span>
-              <a href="#" className="font-semibold">
+              <a href="#" className="font-semibold text-[#4f5d73]">
                 Forgot Password ?
               </a>
             </div>
             <button
-              className="bg-[rgba(0,255,0,0.2)] border-green-700 border-2 font-semibold p-3 rounded text-green-900"
+              className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 font-semibold p-3 rounded"
               onClick={Register}
             >
-              Sign Up
+              Create Account
             </button>
-            <p>
+            <p className="text-gray-700">
               Already have an account ?&nbsp;&nbsp;
-              <Link to="/" className=" font-semibold">
+              <Link to="/" className=" font-semibold hover:text-blue-600">
                 Sign In
               </Link>
             </p>

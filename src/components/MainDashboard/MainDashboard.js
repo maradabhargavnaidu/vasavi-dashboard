@@ -13,13 +13,26 @@ const MainDashboard = () => {
     const expenseData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     // console.log(expenseData);
     setExpenseData({
-      labels: expenseData.map((data) => data.Amount),
+      labels: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
       datasets: [
         {
           label: "Expenses",
           data: expenseData.map((data) => data.Amount),
           borderColor: ["black"],
-          backgroundColor: ["#353c4e"],
+          backgroundColor: ["	#8A2BE2"],
         },
       ],
     });
@@ -33,7 +46,7 @@ const MainDashboard = () => {
     <div>
       <Mainnav />
       <MainBar />
-      <div className="md:w-[900px] md:mt-64 px-5 mx-auto container">
+      <div className="md:w-[900px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg ">
         <BarChart Chartdata={expenseData} className="w-[900px]" />
       </div>
     </div>

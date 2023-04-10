@@ -52,10 +52,10 @@ const StudentComponent = () => {
     margin: 16px;
     animation: ${rotate360} 1s linear infinite;
     transform: translateZ(0);
-    border-top: 2px solid grey;
-    border-right: 2px solid grey;
-    border-bottom: 2px solid grey;
-    border-left: 4px solid black;
+    border-top: 4px solid #ebedef;
+    border-right: 4px solid #ebedef;
+    border-bottom: 4px solid #ebedef;
+    border-left: 4px solid blue;
     background: transparent;
     width: 80px;
     height: 80px;
@@ -152,7 +152,7 @@ const StudentComponent = () => {
               updatestudent(row.id);
             }}
           >
-            <i class="fa-solid fa-pencil"></i>
+            <i class="fa-solid fa-pencil text-[#4f5d73] hover:text-blue-600"></i>
           </button>
           <button
             className="px-2 "
@@ -160,7 +160,7 @@ const StudentComponent = () => {
               deleteStudent(row.id);
             }}
           >
-            <i class="fa-solid fa-trash"></i>
+            <i class="fa-solid fa-trash text-[#4f5d73] hover:text-blue-600"></i>
           </button>
         </>
       ),
@@ -179,14 +179,14 @@ const StudentComponent = () => {
       <main>
         <div className="flex justify-between container mx-auto mt-6 px-4 float-right md:w-[80%] font-abc">
           {/*=== EXPENSES HEADING ===*/}
-          <h1 className="md:text-4xl text-xl font-semibold text-[#353c4e]">
+          <h1 className="md:text-4xl text-xl font-semibold text-[#4f5d73]">
             Students
           </h1>
           {/*=== NAVIGATES TO EXPENSES BASIC INFORMATION PAGE ===*/}
           <Link
             to="/students/createstudent"
             className={
-              "bg-[rgba(0,255,0,0.2)] text-green-600 hover:bg-[rgba(0,255,0,0.1)] border-green-600 border-2 px-4 py-2 rounded-md " +
+              "bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
@@ -208,7 +208,7 @@ const StudentComponent = () => {
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
             onClick={() => downloadExcel(excelData)}
-            className="bg-[rgba(255,153,0,0.2)] border-orange-600 border-2 text-orange-600 px-4 hover:bg-[rgba(255,153,0,0.1)]  py-2 rounded-md mr-4"
+            className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md mr-4"
           >
             Download Report <i class="fa-solid fa-download"></i>
           </button>

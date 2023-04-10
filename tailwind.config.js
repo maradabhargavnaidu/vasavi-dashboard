@@ -3,7 +3,8 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: { abc: "Noto Serif" },
+      fontFamily: { abc: "M PLUS Rounded 1c" },
+      fontFamily: { bcd: "'Noto Serif'" },
     },
   },
   plugins: [],

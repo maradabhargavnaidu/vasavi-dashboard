@@ -20,11 +20,16 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[#353c4e] min-h-screen font-abc">
+    <div className="bg-blue-600 min-h-screen font-bcd">
       <div className="container flex flex-col items-center justify-center h-screen mx-auto px-5">
+        <h1 className="text-3xl text-white mb-2 font-semibold">
+          Welcome Back !
+        </h1>
         <form className="w-full max-w-md bg-white flex flex-col justify-center items-left rounded-md p-6 space-y-3">
-          <h1 className="font-extrabold text-2xl ">Sign In to your account</h1>
-          <label className="font-semibold">Your Email</label>
+          <h1 className="font-extrabold text-2xl text-gray-700">
+            Sign In to your account
+          </h1>
+          <label className="font-semibold text-[#4f5d73]">Your Email</label>
           <input
             type="email"
             placeholder="Enter Email"
@@ -33,7 +38,7 @@ const Login = () => {
               setLogin(e.target.value);
             }}
           />
-          <label className="font-semibold">Password</label>
+          <label className="font-semibold text-[#4f5d73]">Password</label>
           <input
             type="password"
             placeholder="Enter Password"
@@ -45,21 +50,21 @@ const Login = () => {
           <div className="flex justify-between">
             <span className="flex space-x-2 items-center">
               <input type="checkbox" className="w-4 h-4" />
-              <p className="font-semibold">Remember me</p>
+              <p className="font-semibold text-[#4f5d73]">Remember me</p>
             </span>
-            <a href="#" className="font-semibold">
+            <a href="#" className="font-semibold text-[#4f5d73]">
               Forgot Password ?
             </a>
           </div>
           <button
-            className="bg-[rgba(0,255,0,0.2)] border-green-700 border-2  p-3 rounded text-green-900 font-semibold"
+            className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2  p-3 rounded font-semibold"
             onClick={Login}
           >
             Sign In
           </button>
-          <p>
+          <p className="text-gray-800">
             Don't have an account at?&nbsp;&nbsp;
-            <Link to="/register" className="font-semibold">
+            <Link to="/register" className="font-semibold hover:text-blue-600">
               SignUp
             </Link>
             {error && (

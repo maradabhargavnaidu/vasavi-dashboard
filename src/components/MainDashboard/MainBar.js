@@ -57,10 +57,10 @@ const MainBar = () => {
     // margin: 16px;
     animation: ${rotate360} 1s linear infinite;
     transform: translateZ(0);
-    border-top: 4px solid gray;
-    border-right: 4px solid gray;
-    border-bottom: 4px solid gray;
-    border-left: 4px solid black;
+    border-top: 4px solid #ebedef;
+    border-right: 4px solid #ebedef;
+    border-bottom: 4px solid #ebedef;
+    border-left: 4px solid blue;
     background: transparent;
     width: 30px;
     height: 30px;
@@ -76,7 +76,7 @@ const MainBar = () => {
     <div>
       <div>
         <div className="flex flex-col px-5 md:px-0 md:items-start justify-between md:flex-row md:justify-around md:w-[80%] md:float-right mt-10 container h-[600px] md:h-0 font-abc">
-          <div className="md:w-64 rounded-md shadow-sm shadow-gray-600">
+          <div className="md:w-64  shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
                 <h3 className="text-3xl text-[#fe9365] font-medium">

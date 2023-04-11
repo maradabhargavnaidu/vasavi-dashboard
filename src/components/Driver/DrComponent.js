@@ -178,7 +178,7 @@ const DrComponent = () => {
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            New Driver +
+            New Driver <i class="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>

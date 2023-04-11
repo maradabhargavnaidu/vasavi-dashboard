@@ -190,7 +190,7 @@ const StudentComponent = () => {
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            New Student +
+            New Student <i class="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>

@@ -163,11 +163,11 @@ const BusComponent = () => {
           <Link
             to="/buses/newbus"
             className={
-              "bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md " +
+              "bg-white text-blue-600  border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            New Bus +
+            New Bus <i class="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>

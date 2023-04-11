@@ -181,7 +181,7 @@ const ComponentTable = () => {
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            Create Expense +
+            Create Expense <i class="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>

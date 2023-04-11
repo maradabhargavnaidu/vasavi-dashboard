@@ -66,6 +66,11 @@ const MainBar = () => {
     height: 30px;
     border-radius: 50%;
   `;
+
+  // text-[#fe9365]
+  // text-[#0ac282]
+  // text-[#eb3422]
+  // bg-[#0AC282]
   useEffect(() => {
     getBuscount();
     getDrivercount();
@@ -79,15 +84,15 @@ const MainBar = () => {
           <div className="md:w-64  shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
-                <h3 className="text-3xl text-[#fe9365] font-medium">
+                <h3 className="text-3xl text-blue-500 font-medium">
                   {busLoading ? <CustomLoader /> : ""}
                   {buscount}
                 </h3>
                 <h6 className="text-gray-400">Buses</h6>
               </div>
-              <i class="fa-solid fa-signal"></i>
+              <i class="fa-solid fa-signal text-[#4f5d73]"></i>
             </div>
-            <div className="flex bg-[#FE9365] justify-between px-4 py-3 items-center">
+            <div className="flex bg-blue-500 justify-between px-4 py-3 items-center">
               <h3 className="text-gray-100 font-medium">Total Buses</h3>
               <i class="fa-solid fa-arrow-trend-up text-white"></i>
             </div>
@@ -95,15 +100,15 @@ const MainBar = () => {
           <div className="md:w-64 shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
-                <h3 className="text-3xl text-[#0ac282] font-medium">
+                <h3 className="text-3xl text-blue-500 font-medium">
                   {expLoading ? <CustomLoader /> : ""}
                   {expensecount}
                 </h3>
                 <h6 className="text-gray-400">Expenses</h6>
               </div>
-              <i class="fa-solid fa-sheet-plastic"></i>
+              <i class="fa-solid fa-sheet-plastic text-gray-500"></i>
             </div>
-            <div className="flex bg-[#0AC282] justify-between px-4 py-3 items-center">
+            <div className="flex  justify-between px-4 py-3 items-center bg-blue-500">
               <h3 className="text-gray-100 font-medium">Total Expenses</h3>
               <i class="fa-solid fa-arrow-trend-up text-white"></i>
             </div>
@@ -111,15 +116,15 @@ const MainBar = () => {
           <div className="md:w-64 shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
-                <h3 className="text-3xl text-[#eb3422] font-medium">
+                <h3 className="text-3xl text-blue-500 font-medium">
                   {studentLoading ? <CustomLoader /> : ""}
                   {studentcount}
                 </h3>
                 <h6 className="text-gray-400">Students</h6>
               </div>
-              <i class="fa-solid fa-calendar-days"></i>
+              <i class="fa-solid fa-calendar-days text-gray-500"></i>
             </div>
-            <div className="flex bg-[#EB3422] justify-between px-4 py-3 items-center">
+            <div className="flex bg-blue-500 justify-between px-4 py-3 items-center">
               <h3 className="text-gray-100 font-medium">Total Students</h3>
               <i class="fa-solid fa-arrow-trend-up text-white"></i>
             </div>
@@ -127,15 +132,15 @@ const MainBar = () => {
           <div className="md:w-64 shadow-sm shadow-gray-600">
             <div className="flex items-center justify-between  px-4 py-4">
               <div>
-                <h3 className="text-3xl text-[#01a9ac] font-medium">
+                <h3 className="text-3xl text-blue-500 font-medium">
                   {driverLoading ? <CustomLoader /> : ""}
                   {drivercount}
                 </h3>
                 <h6 className="text-gray-400">Drivers</h6>
               </div>
-              <i class="fa-solid fa-download"></i>
+              <i class="fa-solid fa-download text-gray-500"></i>
             </div>
-            <div className="flex bg-[#01A9AC] justify-between px-4 py-3 items-center">
+            <div className="flex bg-blue-500 justify-between px-4 py-3 items-center">
               <h3 className="text-gray-100 font-medium">Total Drivers</h3>
               <i class="fa-solid fa-arrow-trend-up text-white"></i>
             </div>

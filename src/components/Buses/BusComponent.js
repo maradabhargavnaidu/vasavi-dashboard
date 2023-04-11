@@ -154,7 +154,7 @@ const BusComponent = () => {
   return (
     <>
       <main>
-        <div className="flex justify-between container mx-auto mt-6 px-4 float-right md:w-[80%] font-abc">
+        <div className="flex justify-between container mx-auto mt-28 px-4 float-right md:w-[80%] font-abc">
           {/*=== EXPENSES HEADING ===*/}
           <h1 className="md:text-4xl text-xl font-semibold text-[#4f5d73]">
             Buses

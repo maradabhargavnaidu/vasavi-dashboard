@@ -22,7 +22,7 @@ const Busform = () => {
     });
   };
   return (
-    <div className="md:w-[80%] md:px-4 md:float-right">
+    <div className="md:w-[80%] md:px-4 md:float-right mt-28">
       {/*=== BUS FORM START HERE ===*/}
       <main className="container mx-auto mt-5">
         <h1 className="font-medium text-4xl text-center M font-abc text-[#4f5d73]">

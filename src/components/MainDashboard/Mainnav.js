@@ -32,7 +32,7 @@ const Mainnav = () => {
     <div>
       <nav className=" shadow-sm shadow-gray-500 font-abc">
         <div class=" flex  md:space-x-0 w-full justify-between mx-auto shadow-gray-100 shadow-sm">
-          <div class="flex bg-blue-600 justify-between py-5 items-center px-5 w-[56%] md:w-[20%]">
+          <div class="flex bg-blue-600 justify-between py-7 items-center px-5 w-[56%] md:w-[20%] fixed z-50">
             <Link to="/">
               <h3 class="text-white text-lg font-semibold">VASAVI COLLEGE</h3>
             </Link>
@@ -53,8 +53,8 @@ const Mainnav = () => {
               ></i>
             </div>
           </div>
-          <div className="py-5 px-5">
-            <div className="flex justify-between items-center">
+          <div className="py-10 px-5 fixed shadow-sm shadow-gray-400 w-full bg-white">
+            <div className="flex justify-between items-center right-5 top-5 z-40 absolute">
               {/*=== ACCOUNT PICTURE NAME AND DETAIL ===*/}
               <div
                 className="flex items-center justify-between space-x-3"
@@ -84,7 +84,7 @@ const Mainnav = () => {
       </nav>
       <div
         className={
-          "flex flex-col bg-gray-100 w-[56.5%] text-[#4f5d73] font-abc absolute z-50 float-left md:w-[20%] shadow-sm shadow-gray-400 md:h-[89.9vh] px-8 py-5 " +
+          "flex flex-col bg-gray-100 w-[56.5%] text-[#4f5d73] font-abc z-50 float-left md:w-[20%] shadow-sm shadow-gray-400 h-[100vh] px-8 py-5 fixed top-20 " +
           (menuToggle ? "md:block hidden" : "md:hidden block")
         }
       >

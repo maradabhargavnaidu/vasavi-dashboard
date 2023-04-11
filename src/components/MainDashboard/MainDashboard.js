@@ -12,6 +12,14 @@ const MainDashboard = () => {
     const data = await getDocs(expenseCollection);
     const expenseData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     // console.log(expenseData);
+    var amount = [];
+    var sum = 0;
+    expenseData.forEach((datas) => {
+      console.log(datas.Amount);
+      sum += Number(datas.Amount);
+    });
+    amount.push(sum);
+    console.log(amount);
     setExpenseData({
       labels: [
         "January",
@@ -30,7 +38,8 @@ const MainDashboard = () => {
       datasets: [
         {
           label: "Expenses",
-          data: expenseData.map((data) => data.Amount),
+          // data: expenseData.map((data) => data.Amount),
+          data: amount,
           borderColor: ["black"],
           backgroundColor: ["	#8A2BE2"],
         },
@@ -46,8 +55,9 @@ const MainDashboard = () => {
     <div>
       <Mainnav />
       <MainBar />
-      <div className="md:w-[900px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg ">
-        <BarChart Chartdata={expenseData} className="w-[900px]" />
+      <div className="md:w-[850px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg">
+        <BarChart Chartdata={expenseData} className="w-[850px]" />
+        <BarChart Chartdata={expenseData} className="w-[850px]" />
       </div>
     </div>
   );

@@ -75,7 +75,7 @@ const Mainnav = () => {
                   className="bg-blue-600 px-4 text-gray-100 font-semibold py-2 rounded-md flex items-center "
                   onClick={logout}
                 >
-                  Sign Out
+                  Logout
                 </button>
               </div>
             </div>

@@ -196,12 +196,12 @@ const ComponentTable = () => {
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60 outline-blue-600"
             />
           </div>
-          <Link
+          {/* <Link
             to="/expense/files"
             className="bg-[rgba(255,153,0,0.2)] flex items-center bg-white text-blue-600 border-blue-600 hover:bg-blue-600 border-2 hover:text-white rounded-md px-5 py-2"
           >
             <i class="fa-solid fa-eye"></i> &nbsp;&nbsp;Bill
-          </Link>
+          </Link> */}
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
             onClick={() => downloadExcel(excelData)}

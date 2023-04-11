@@ -37,7 +37,7 @@ const Updateinfoform = () => {
       <div className="md:w-[80%] md:px-4 md:float-right font-abc">
         {/*=== DRIVER FORM START HERE ===*/}
         <main className="container mx-auto mt-5">
-          <h1 className="font-medium text-4xl text-center">
+          <h1 className="font-medium text-4xl text-center text-[#4f5d73]">
             Basic Information
           </h1>
           <form className="mt-8 flex flex-col md:space-y-6 container px-4">
@@ -45,10 +45,10 @@ const Updateinfoform = () => {
             <div className="flex-col flex md:flex-row justify-around items-center">
               {/*=== FULL NAME ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Full Name:</label>
+                <label className="font-medium text-[#4f5d73]">Full Name:</label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, fullName: e.target.value });
                   }}
@@ -58,10 +58,10 @@ const Updateinfoform = () => {
               </div>
               {/*=== GENDER ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Gender:</label>
+                <label className="font-medium text-[#4f5d73]">Gender:</label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, gender: e.target.value });
                   }}
@@ -74,10 +74,10 @@ const Updateinfoform = () => {
             <div className="flex flex-col md:flex-row justify-around items-center">
               {/*=== AGE ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Age:</label>
+                <label className="font-medium text-[#4f5d73]">Age:</label>
                 <input
                   type="number"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, age: e.target.value });
                   }}
@@ -87,10 +87,10 @@ const Updateinfoform = () => {
               </div>
               {/*=== PHONE NUMBER ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Phone:</label>
+                <label className="font-medium text-[#4f5d73]">Phone:</label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, phone: e.target.value });
                   }}
@@ -103,10 +103,10 @@ const Updateinfoform = () => {
             <div className="flex flex-col md:flex-row justify-around items-center">
               {/*=== ADDRESS ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Address:</label>
+                <label className="font-medium text-[#4f5d73]">Address:</label>
                 <input
                   type="textarea"
-                  className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, address: e.target.value });
                   }}
@@ -116,10 +116,12 @@ const Updateinfoform = () => {
               </div>
               {/*=== LICENSE NUMBER ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">License Number:</label>
+                <label className="font-medium text-[#4f5d73]">
+                  License Number:
+                </label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setDriver({ ...driver, licenseNo: e.target.value });
                   }}
@@ -141,7 +143,7 @@ const Updateinfoform = () => {
             {/*=== SUBMIT BUTTON ===*/}
             <Link
               to="/driver"
-              className="bg-orange-400 px-10 text-white py-4 rounded-md"
+              className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
               onClick={updateDriver}
             >
               Update

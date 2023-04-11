@@ -35,7 +35,7 @@ const Busform = () => {
       <div className="md:w-[80%] md:px-4 md:float-right font-abc">
         {/*=== BUS FORM START HERE ===*/}
         <main className="container mx-auto mt-5">
-          <h1 className="font-medium text-4xl text-center">
+          <h1 className="font-medium text-4xl text-center text-[#4f5d73]">
             Update Bus Information
           </h1>
           <form className="mt-8 flex flex-col md:space-y-6 container px-4">
@@ -43,10 +43,12 @@ const Busform = () => {
             <div className="flex-col flex md:flex-row justify-around items-center">
               {/*=== BUS NUMBER ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Bus Number:</label>
+                <label className="font-medium text-[#4f5d73]">
+                  Bus Number:
+                </label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setBus({ ...bus, busNo: e.target.value });
                   }}
@@ -56,10 +58,12 @@ const Busform = () => {
               </div>
               {/*=== REGISTRATION NUMBER ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Registration Number:</label>
+                <label className="font-medium text-[#4f5d73]">
+                  Registration Number:
+                </label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setBus({ ...bus, RegistrationNo: e.target.value });
                   }}
@@ -72,10 +76,10 @@ const Busform = () => {
             <div className="flex flex-col md:flex-row md:justify-around items-center">
               {/*=== ROUTE ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Route:</label>
+                <label className="font-medium text-[#4f5d73]">Route:</label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setBus({ ...bus, route: e.target.value });
                   }}
@@ -85,10 +89,12 @@ const Busform = () => {
               </div>
               {/*=== BUS CONDITION ===*/}
               <div className="flex flex-col justify-center items-start">
-                <label className="font-medium">Bus Condition:</label>
+                <label className="font-medium text-[#4f5d73]">
+                  Bus Condition:
+                </label>
                 <input
                   type="text"
-                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                  className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                   onChange={(e) => {
                     setBus({ ...bus, busCondition: e.target.value });
                   }}
@@ -110,7 +116,7 @@ const Busform = () => {
             {/*=== SUBMIT BUTTON ===*/}
             <Link
               to="/buses"
-              className="bg-orange-400 px-10 text-white py-4 rounded-md"
+              className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
               onClick={update}
             >
               Update

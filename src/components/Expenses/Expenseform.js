@@ -42,7 +42,7 @@ const Expenseform = () => {
     <div className="md:w-[80%] md:px-4 md:float-right font-abc">
       {/*=== EXPENSE FORM START HERE ===*/}
       <main className="container mx-auto mt-5">
-        <h1 className="font-medium text-4xl text-center">
+        <h1 className="font-medium text-4xl text-center text-[#4f5d73]">
           Expenses Information
         </h1>
         <form className="mt-8 flex flex-col md:space-y-6 container px-4">
@@ -50,11 +50,11 @@ const Expenseform = () => {
           <div className="flex-col flex md:flex-row justify-around items-center">
             {/*=== BUS NUMBER ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Bus Number:</label>
+              <label className="font-medium text-[#4f5d73]">Bus Number:</label>
               <input
                 type="text"
                 required
-                className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
+                className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12 outline-blue-500"
                 onChange={(e) => {
                   setBusNo(e.target.value);
                 }}
@@ -63,16 +63,18 @@ const Expenseform = () => {
             </div>
             {/*=== EXPENSE TYPE ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Expense Type:</label>
+              <label className="font-medium text-[#4f5d73]">
+                Expense Type:
+              </label>
               <select
                 className="border-gray-300 border-2 rounded-md px-4  md:w-[400px] w-[375px] h-12"
                 onChange={(e) => {
                   setExpenseType(e.target.value);
                 }}
               >
-                <option className="bg-orange-500 text-white">Select</option>
-                <option className="bg-orange-500 text-white">Fuel</option>
-                <option className="bg-orange-500 text-white">Repair</option>
+                <option className="bg-blue-500 text-white">Select</option>
+                <option className="bg-blue-500 text-white">Fuel</option>
+                <option className="bg-blue-500 text-white">Repair</option>
               </select>
             </div>
           </div>
@@ -80,10 +82,10 @@ const Expenseform = () => {
           <div className="flex flex-col md:flex-row justify-around items-center">
             {/*=== REPAIR TYPE ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Repair Type:</label>
+              <label className="font-medium text-[#4f5d73]">Repair Type:</label>
               <input
                 type="text"
-                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12 outline-blue-500"
                 onChange={(e) => {
                   setRepairType(e.target.value);
                 }}
@@ -92,10 +94,10 @@ const Expenseform = () => {
             </div>
             {/*=== DRIVER ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Driver:</label>
+              <label className="font-medium text-[#4f5d73]">Driver:</label>
               <input
                 type="text"
-                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12 outline-blue-500"
                 onChange={(e) => {
                   setDriver(e.target.value);
                 }}
@@ -107,10 +109,10 @@ const Expenseform = () => {
           <div className="flex flex-col md:flex-row justify-around items-center">
             {/*=== DATE ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Date:</label>
+              <label className="font-medium text-[#4f5d73]">Date:</label>
               <input
                 type="date"
-                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12 outline-blue-500"
                 onChange={(e) => {
                   setDate(e.target.value);
                 }}
@@ -119,10 +121,10 @@ const Expenseform = () => {
             </div>
             {/*=== AMOUNT ===*/}
             <div className="flex flex-col justify-center items-start">
-              <label className="font-medium">Amount:</label>
+              <label className="font-medium text-[#4f5d73]">Amount:</label>
               <input
                 type="text"
-                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] h-12 outline-blue-500"
                 onChange={(e) => {
                   setAmount(e.target.value);
                 }}
@@ -133,16 +135,21 @@ const Expenseform = () => {
           <div className="flex flex-col md:flex-row justify-around items-center">
             {/*=== FILE ===*/}
             <div className="flex flex-col justify-center items-center">
-              <label className="font-medium">Upload Bill:</label>
+              <label className="font-medium text-[#4f5d73]">Upload Bill:</label>
               <input
                 type="file"
-                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] py-3"
+                className="border-gray-300 border-2 rounded-md px-4 md:w-[400px] w-[375px] py-3 outline-blue-500"
                 onChange={(e) => {
                   setUploadFile(e.target.files[0]);
                 }}
                 placeholder="Date"
               />
-              <button onClick={fileUpload}>upload</button>
+              <button
+                onClick={fileUpload}
+                className="bg-gray-200 px-5 py-2 rounded text-gray-600"
+              >
+                upload
+              </button>
             </div>
           </div>
         </form>
@@ -159,7 +166,7 @@ const Expenseform = () => {
           {/*=== SUBMIT BUTTON ===*/}
           <Link
             to="/expense"
-            className="bg-orange-400 px-10 text-white py-4 rounded-md"
+            className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
             onClick={createExpense}
           >
             Submit

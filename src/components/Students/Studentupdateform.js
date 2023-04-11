@@ -193,7 +193,7 @@ const Studentform = () => {
             {/*=== SUBMIT BUTTON ===*/}
             <Link
               to="/students"
-              className="bg-orange-400 px-10 text-white py-4 rounded-md"
+              className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
               onClick={updateStudent}
             >
               update

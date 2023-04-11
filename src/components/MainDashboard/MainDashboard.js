@@ -8,33 +8,47 @@ import { db } from "../../firebase-config";
 
 const MainDashboard = () => {
   const expenseCollection = collection(db, "Expenses");
+  const [expenseMonth, setExpenseMonth] = useState([]);
   const getExpenses = async () => {
     const data = await getDocs(expenseCollection);
     const expenseData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     // console.log(expenseData);
+    //Total Expenses
     var amount = [];
     var sum = 0;
     expenseData.forEach((datas) => {
-      console.log(datas.Amount);
       sum += Number(datas.Amount);
     });
     amount.push(sum);
-    console.log(amount);
+    //Expenses by monthly
+    var months = [];
+    var monthsum = 0;
+    var montharr = [];
+    expenseData.forEach((data) => {
+      var date = data.Date.split("-");
+      months.push(date[1]);
+      if (date[1] == "04") {
+        monthsum += Number(data.Amount);
+      }
+    });
+    montharr.push(monthsum);
+    console.log(montharr);
+    setExpenseMonth(montharr);
+    //SETTING DATA
     setExpenseData({
-      labels: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+      labels: months,
+      datasets: [
+        {
+          label: "Expenses",
+          data: expenseData.map((data) => data.Amount),
+          // data: expenseMonth.map((data) => data),
+          borderColor: ["black"],
+          backgroundColor: ["	#8A2BE2"],
+        },
       ],
+    });
+    setTotalData({
+      labels: ["Total Expenses"],
       datasets: [
         {
           label: "Expenses",
@@ -46,18 +60,20 @@ const MainDashboard = () => {
       ],
     });
   };
+
   useEffect(() => {
     getExpenses();
   }, []);
 
   const [expenseData, setExpenseData] = useState({ labels: [], datasets: [] });
+  const [totalData, setTotalData] = useState({ labels: [], datasets: [] });
   return (
     <div>
       <Mainnav />
       <MainBar />
       <div className="md:w-[850px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg">
-        <BarChart Chartdata={expenseData} className="w-[850px]" />
-        <BarChart Chartdata={expenseData} className="w-[850px]" />
+        <BarChart Chartdata={expenseData} />
+        <BarChart Chartdata={totalData} />
       </div>
     </div>
   );

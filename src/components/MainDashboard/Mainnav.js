@@ -32,7 +32,7 @@ const Mainnav = () => {
     <div>
       <nav className=" shadow-sm shadow-gray-500 font-abc">
         <div class=" flex  md:space-x-0 w-full justify-between mx-auto shadow-gray-100 shadow-sm">
-          <div class="flex bg-blue-600 justify-between py-7 items-center px-5 w-[56%] md:w-[20%] fixed z-50">
+          <div class="flex bg-blue-600 justify-between py-[26px] items-center px-5 w-[56%] md:w-[20%] fixed z-50">
             <Link to="/">
               <h3 class="text-white text-lg font-semibold">VASAVI COLLEGE</h3>
             </Link>

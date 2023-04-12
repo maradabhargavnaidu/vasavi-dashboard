@@ -130,7 +130,7 @@ const MainDashboard = () => {
       labels: monthlysumarr.map((data) => data.month),
       datasets: [
         {
-          label: "Expenses",
+          label: "Monthly Expenses",
           // data: expenseData.map((data) => data.Amount),
           data: monthlysumarr.map((data) => data.sum),
           borderColor: ["black"],
@@ -142,7 +142,7 @@ const MainDashboard = () => {
       labels: ["Total Expenses"],
       datasets: [
         {
-          label: "Expenses",
+          label: "Total Expenses",
           // data: expenseData.map((data) => data.Amount),
           data: amount,
           borderColor: ["black"],

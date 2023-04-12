@@ -109,7 +109,7 @@ const MainBar = () => {
               <i class="fa-solid fa-sheet-plastic text-gray-500"></i>
             </div>
             <div className="flex  justify-between px-4 py-3 items-center bg-blue-500">
-              <h3 className="text-gray-100 font-medium">Total Expenses</h3>
+              <h3 className="text-gray-100 font-medium">Number of expenses</h3>
               <i class="fa-solid fa-arrow-trend-up text-white"></i>
             </div>
           </div>

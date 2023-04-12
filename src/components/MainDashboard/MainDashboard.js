@@ -21,27 +21,118 @@ const MainDashboard = () => {
     });
     amount.push(sum);
     //Expenses by monthly
-    var months = [];
-    var monthsum = 0;
-    var montharr = [];
+    var monthlysumarr = [];
+    var Jansum = 0;
+    var Febsum = 0;
+    var Marchsum = 0;
+    var Aprilsum = 0;
+    var Maysum = 0;
+    var Junesum = 0;
+    var Julysum = 0;
+    var Augsum = 0;
+    var Sepsum = 0;
+    var Octsum = 0;
+    var Novsum = 0;
+    var Decsum = 0;
+
     expenseData.forEach((data) => {
       var date = data.Date.split("-");
-      months.push(date[1]);
-      if (date[1] == "04") {
-        monthsum += Number(data.Amount);
+      if (date[1] === "01") {
+        Jansum += Number(data.Amount);
+      } else if (date[1] === "02") {
+        Febsum += Number(data.Amount);
+      } else if (date[1] === "03") {
+        Marchsum += Number(data.Amount);
+      } else if (date[1] === "04") {
+        Aprilsum += Number(data.Amount);
+      } else if (date[1] === "05") {
+        Maysum += Number(data.Amount);
+      } else if (date[1] === "06") {
+        Junesum += Number(data.Amount);
+      } else if (date[1] === "07") {
+        Julysum += Number(data.Amount);
+      } else if (date[1] === "08") {
+        Augsum += Number(data.Amount);
+      } else if (date[1] === "09") {
+        Sepsum += Number(data.Amount);
+      } else if (date[1] === "10") {
+        Octsum += Number(data.Amount);
+      } else if (date[1] === "11") {
+        Novsum += Number(data.Amount);
+      } else if (date[1] === "12") {
+        Decsum += Number(data.Amount);
       }
     });
-    montharr.push(monthsum);
-    console.log(montharr);
-    setExpenseMonth(montharr);
+    var obj1 = {
+      month: "January",
+      sum: Jansum,
+    };
+    var obj2 = {
+      month: "February",
+      sum: Febsum,
+    };
+    var obj3 = {
+      month: "March",
+      sum: Marchsum,
+    };
+    var obj4 = {
+      month: "April",
+      sum: Aprilsum,
+    };
+    var obj5 = {
+      month: "May",
+      sum: Maysum,
+    };
+    var obj6 = {
+      month: "June",
+      sum: Junesum,
+    };
+    var obj7 = {
+      month: "July",
+      sum: Julysum,
+    };
+    var obj8 = {
+      month: "August",
+      sum: Augsum,
+    };
+    var obj9 = {
+      month: "September",
+      sum: Sepsum,
+    };
+    var obj10 = {
+      month: "October",
+      sum: Octsum,
+    };
+    var obj11 = {
+      month: "November",
+      sum: Novsum,
+    };
+    var obj12 = {
+      month: "December",
+      sum: Decsum,
+    };
+
+    monthlysumarr.push(obj1);
+    monthlysumarr.push(obj2);
+    monthlysumarr.push(obj3);
+    monthlysumarr.push(obj4);
+    monthlysumarr.push(obj5);
+    monthlysumarr.push(obj6);
+    monthlysumarr.push(obj7);
+    monthlysumarr.push(obj8);
+    monthlysumarr.push(obj9);
+    monthlysumarr.push(obj10);
+    monthlysumarr.push(obj11);
+    monthlysumarr.push(obj12);
+    setExpenseMonth(monthlysumarr);
     //SETTING DATA
     setExpenseData({
-      labels: months,
+      labels: monthlysumarr.map((data) => data.month),
       datasets: [
         {
           label: "Expenses",
-          data: expenseData.map((data) => data.Amount),
-          // data: expenseMonth.map((data) => data),
+          // data: expenseData.map((data) => data.Amount),
+          data: monthlysumarr.map((data) => data.sum),
           borderColor: ["black"],
           backgroundColor: ["	#8A2BE2"],
         },

@@ -134,7 +134,7 @@ const MainDashboard = () => {
           // data: expenseData.map((data) => data.Amount),
           data: monthlysumarr.map((data) => data.sum),
           borderColor: ["black"],
-          backgroundColor: ["	#8A2BE2"],
+          backgroundColor: ["#1e90ff"],
         },
       ],
     });
@@ -146,7 +146,7 @@ const MainDashboard = () => {
           // data: expenseData.map((data) => data.Amount),
           data: amount,
           borderColor: ["black"],
-          backgroundColor: ["	#8A2BE2"],
+          backgroundColor: ["#1e90ff"],
         },
       ],
     });

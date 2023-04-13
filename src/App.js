@@ -38,8 +38,8 @@ function App() {
     }
   }
   function PublicOne() {
-    if (users?.email === null) {
-      return <>notallowed</>;
+    if (users?.email == null) {
+      return <Login />;
     } else {
       return <Outlet />;
     }
@@ -57,7 +57,6 @@ function App() {
             <Route path="/driver" element={<Dashboard />} />
             <Route path="/expense" element={<Expensedashboard />} />
             <Route path="/students" element={<Studentsdashboard />} />
-
             <Route path="/expense/files" element={<Files />} />
           </Route>
           <Route element={<AdminElement />}>

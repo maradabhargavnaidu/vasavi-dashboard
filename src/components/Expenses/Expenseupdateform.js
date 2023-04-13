@@ -68,9 +68,9 @@ const Expenseform = () => {
                   }}
                   value={Expense.ExpenseType}
                 >
-                  <option className="bg-orange-500 text-white">Select</option>
-                  <option className="bg-orange-500 text-white">Fuel</option>
-                  <option className="bg-orange-500 text-white">Repair</option>
+                  <option className="bg-blue-500 text-white">Select</option>
+                  <option className="bg-blue-500 text-white">Fuel</option>
+                  <option className="bg-blue-500 text-white">Repair</option>
                 </select>
               </div>
             </div>

@@ -51,16 +51,13 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<PublicOne />}>
-            <Route path="/updatebus/:id" element={<Busupdateform />} />
-            <Route path="/updatedriver/:id" element={<Infoupdateform />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/main" element={<MainDashboard />} />
             <Route path="/buses" element={<Busdashboard />} />
             <Route path="/driver" element={<Dashboard />} />
             <Route path="/expense" element={<Expensedashboard />} />
             <Route path="/students" element={<Studentsdashboard />} />
-            <Route path="/updateExpense/:id" element={<Expenseupdateform />} />
-            <Route path="/updatestudent/:id" element={<Studentupdateform />} />
+
             <Route path="/expense/files" element={<Files />} />
           </Route>
           <Route element={<AdminElement />}>
@@ -68,6 +65,10 @@ function App() {
             <Route path="/expense/create-expense" element={<Expense />} />
             <Route path="/buses/newbus" element={<Bus />} />
             <Route path="/students/createstudent" element={<Student />} />
+            <Route path="/updateExpense/:id" element={<Expenseupdateform />} />
+            <Route path="/updatestudent/:id" element={<Studentupdateform />} />
+            <Route path="/updatebus/:id" element={<Busupdateform />} />
+            <Route path="/updatedriver/:id" element={<Infoupdateform />} />
           </Route>
         </Routes>
       </Router>

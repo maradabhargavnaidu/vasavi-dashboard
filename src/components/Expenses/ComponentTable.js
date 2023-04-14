@@ -5,8 +5,6 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../../firebase-config";
 import * as XLSX from "xlsx";
 import styled, { keyframes } from "styled-components";
 
@@ -23,7 +21,12 @@ const ComponentTable = () => {
   const [userInfo, setUserInfo] = useState();
   // LOADER
   const [pending, setPending] = useState(true);
-  const [pdf, setPdf] = useState(false);
+  // SELECTED ROWS
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  // HANDLING SELECTED ROWS
+  const handleRowSelected = React.useCallback((state) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
   // TO NAVIGATE
   const Navigate = useNavigate();
   // DELETE FUNCTION
@@ -32,14 +35,6 @@ const ComponentTable = () => {
     await deleteDoc(Expensedoc);
     window.location.reload();
   };
-  const [files, setFiles] = useState([]);
-  React.useEffect(() => {
-    getDownloadURL(ref(storage, "file/MyResume.pdf")).then((url) => {
-      console.log(url);
-      setFiles(url);
-      console.log(url);
-    });
-  }, []);
   const CustomLoader = () => (
     <div style={{ padding: "24px" }}>
       <Spinner />
@@ -109,7 +104,7 @@ const ComponentTable = () => {
       name: "Bills",
       cell: (row) => (
         <button
-          onClick={() => setPdf(true)}
+          onClick={() => upload(row.fileURL)}
           className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 rounded hover:text-white border-2 px-4 py-2"
         >
           view
@@ -117,6 +112,9 @@ const ComponentTable = () => {
       ),
     },
   ];
+  const upload = (url) => {
+    Navigate("/file/" + url);
+  };
   // CONNECTS TO EXPENSE COLLECTION IN FIREBASE
   const expenseCollection = collection(db, "Expenses");
   // NAVIGATES TO EXPENSE UPDATE FORM
@@ -125,12 +123,16 @@ const ComponentTable = () => {
   };
   // FUNCTION TO CHANGE JSON DATA TO EXCEL
   const downloadExcel = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Expenses.xlsx");
+    if (selectedRows.length === 0) {
+      alert("Kindly choose the items you wish to download.");
+    } else {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workbook, "Expenses.xlsx");
+    }
   };
   // FUNCTION TO GET EXPENSES FORM DATABASE
   const getExpenses = async () => {
@@ -138,7 +140,13 @@ const ComponentTable = () => {
     setExpenses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
-    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    // if (rowSelected === true) {
+    //   setExcelData(selectedRows.map((doc) => ({ ...doc, doc })));
+    // } else {
+    //   setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    // }
+    setExcelData(selectedRows.map((doc) => ({ ...doc, doc })));
+    // setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
     // setSearch(expenses);
     setPending(false);
   };
@@ -147,9 +155,8 @@ const ComponentTable = () => {
     getExpenses();
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
-      console.log("executing");
     });
-  }, []);
+  }, [selectedRows]);
   // FILTER FUNCTION
   const Filter = (e) => {
     const newData = expenses.filter((row) => {
@@ -225,7 +232,9 @@ const ComponentTable = () => {
           </Link> */}
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
-            onClick={() => downloadExcel(excelData)}
+            onClick={() => {
+              downloadExcel(excelData);
+            }}
             className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 border-2 hover:text-white px-4  py-2 rounded-md mr-4"
           >
             Download Report <i class="fa-solid fa-download"></i>
@@ -241,22 +250,10 @@ const ComponentTable = () => {
           fixedHeader
           pagination
           progressPending={pending}
+          onSelectedRowsChange={handleRowSelected}
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
-
-      {pdf && (
-        <>
-          <button onClick={() => setPdf(false)}>X</button>
-          <embed
-            className=" z-20 absolute right-0 bottom-0"
-            src={files}
-            type="application/pdf"
-            width={80 + "%"}
-            height={90 + "%"}
-          />
-        </>
-      )}
     </>
   );
 };

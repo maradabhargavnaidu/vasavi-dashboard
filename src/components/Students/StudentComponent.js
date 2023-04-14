@@ -25,13 +25,19 @@ const StudentComponent = () => {
   const studentCollection = collection(db, "Students");
   // TO NAVIGATE
   const Navigate = useNavigate();
+  // SELECTED ROWS
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  // HANDLING SELECTED ROWS
+  const handleRowSelected = React.useCallback((state) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
   // FUNCTION TO GET STUDENTS DATA
   const getStudents = async () => {
     const data = await getDocs(studentCollection);
     setStudents(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
-    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    setExcelData(selectedRows.map((doc) => ({ ...doc, doc })));
     setPending(false);
   };
   const CustomLoader = () => (
@@ -128,17 +134,20 @@ const StudentComponent = () => {
     getStudents();
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
-      console.log("executing");
     });
-  }, []);
+  }, [selectedRows]);
   // EXPORTING JSON DATA TO EXCEL
   const downloadExcel = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Students.xlsx");
+    if (selectedRows.length === 0) {
+      alert("Kindly choose the items you wish to download.");
+    } else {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workbook, "Students.xlsx");
+    }
   };
   // ADMIN ACTIONS
   if (userInfo?.email === "admin@gmail.com") {
@@ -223,6 +232,7 @@ const StudentComponent = () => {
           pagination
           progressPending={pending}
           progressComponent={<CustomLoader />}
+          onSelectedRowsChange={handleRowSelected}
         ></DataTable>
       </div>
     </>

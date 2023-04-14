@@ -25,6 +25,12 @@ const DrComponent = () => {
   const [userInfo, setUserInfo] = useState();
   // LOADER
   const [pending, setPending] = useState(true);
+  // SELECTED ROWS
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  // HANDLING SELECTED ROWS
+  const handleRowSelected = React.useCallback((state) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
   // DELETE DRIVER FUNCTION
   const deleteDriver = async (id) => {
     const driverdoc = doc(db, "Drivers", id);
@@ -104,17 +110,21 @@ const DrComponent = () => {
     setDrivers(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
-    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    setExcelData(selectedRows.map((doc) => ({ ...doc, doc })));
     setPending(false);
   };
   // FUNCTION TO CONVERT JSON TO EXCEL DATA
   const downloadExcel = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Drivers.xlsx");
+    if (selectedRows.length === 0) {
+      alert("Kindly choose the items you wish to download.");
+    } else {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workbook, "Drivers.xlsx");
+    }
   };
   // UPDATING DRIVER
   const updatedriver = (id) => {
@@ -126,7 +136,7 @@ const DrComponent = () => {
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
     });
-  }, []);
+  }, [selectedRows]);
   // ADMIN ACTIONS
   if (userInfo?.email === "admin@gmail.com") {
     columns.push({
@@ -213,6 +223,7 @@ const DrComponent = () => {
           pagination
           progressPending={pending}
           progressComponent={<CustomLoader />}
+          onSelectedRowsChange={handleRowSelected}
         ></DataTable>
       </div>
     </>

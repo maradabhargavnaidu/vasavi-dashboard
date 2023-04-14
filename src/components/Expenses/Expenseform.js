@@ -20,8 +20,8 @@ const Expenseform = () => {
   // UPLOAD FILE FUNCTRION
   const fileUpload = () => {
     if (uploadFile == null) return;
-    const fileRef = ref(storage, `file/${uploadFile.name}`);
-    setFileURL(`file/`);
+    const fileRef = ref(storage, `${uploadFile.name}`);
+    setFileURL(`${uploadFile.name}`);
     uploadBytes(fileRef, uploadFile)
       .then(() => {
         alert("File uploaded");

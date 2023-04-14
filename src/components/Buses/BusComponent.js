@@ -17,8 +17,7 @@ const BusComponent = () => {
   const [data, setData] = useState(false);
   // SETTING ONLY EXCELDATA TO EXPORT
   const [excelData, setExcelData] = useState([]);
-  // SETTING SELECTEDROWS
-  const [selectedRows, setSelectedRows] = React.useState(false);
+
   // SETTING USER DATA
   const [userInfo, setUserInfo] = useState();
   // CONNECTS TO DATABASE OF BUSES
@@ -27,13 +26,19 @@ const BusComponent = () => {
   const Navigate = useNavigate();
   // USING FOR LOADER
   const [pending, setPending] = useState(true);
+  // SELECTED ROWS
+  const [selectedRows, setSelectedRows] = React.useState([]);
+  // HANDLING SELECTED ROWS
+  const handleRowSelected = React.useCallback((state) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
   // FUCTION TO SET DATA IN BUSES
   const getBuses = async () => {
     const data = await getDocs(busCollection);
     setBuses(
       data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id, index }))
     );
-    setExcelData(data.docs.map((doc) => ({ ...doc.data() })));
+    setExcelData(selectedRows.map((doc) => ({ ...doc, doc })));
     setPending(false);
   };
   //LOADER DESIGN
@@ -106,12 +111,16 @@ const BusComponent = () => {
   };
   // EXCEL DATA DOWNLOADING
   const downloadExcel = (data) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Buses.xlsx");
+    if (selectedRows.length === 0) {
+      alert("Kindly choose the items you wish to download.");
+    } else {
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workbook, "Buses.xlsx");
+    }
   };
 
   //SIDE EFFECTS
@@ -120,7 +129,7 @@ const BusComponent = () => {
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
     });
-  }, []);
+  }, [selectedRows]);
   // ADMIN ACTIONS
   if (userInfo?.email === "admin@gmail.com") {
     buscolumns.push({
@@ -201,6 +210,7 @@ const BusComponent = () => {
           pagination
           progressPending={pending}
           progressComponent={<CustomLoader />}
+          onSelectedRowsChange={handleRowSelected}
         ></DataTable>
       </div>
     </>

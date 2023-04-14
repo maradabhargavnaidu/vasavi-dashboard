@@ -5,6 +5,8 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../../firebase-config";
 import * as XLSX from "xlsx";
 import styled, { keyframes } from "styled-components";
 
@@ -21,6 +23,7 @@ const ComponentTable = () => {
   const [userInfo, setUserInfo] = useState();
   // LOADER
   const [pending, setPending] = useState(true);
+  const [pdf, setPdf] = useState(false);
   // TO NAVIGATE
   const Navigate = useNavigate();
   // DELETE FUNCTION
@@ -29,6 +32,14 @@ const ComponentTable = () => {
     await deleteDoc(Expensedoc);
     window.location.reload();
   };
+  const [files, setFiles] = useState([]);
+  React.useEffect(() => {
+    getDownloadURL(ref(storage, "file/MyResume.pdf")).then((url) => {
+      console.log(url);
+      setFiles(url);
+      console.log(url);
+    });
+  }, []);
   const CustomLoader = () => (
     <div style={{ padding: "24px" }}>
       <Spinner />
@@ -94,6 +105,17 @@ const ComponentTable = () => {
       selector: (row) => row.Amount,
       sortable: true,
     },
+    {
+      name: "Bills",
+      cell: (row) => (
+        <button
+          onClick={() => setPdf(true)}
+          className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 rounded hover:text-white border-2 px-4 py-2"
+        >
+          view
+        </button>
+      ),
+    },
   ];
   // CONNECTS TO EXPENSE COLLECTION IN FIREBASE
   const expenseCollection = collection(db, "Expenses");
@@ -128,7 +150,6 @@ const ComponentTable = () => {
       console.log("executing");
     });
   }, []);
-
   // FILTER FUNCTION
   const Filter = (e) => {
     const newData = expenses.filter((row) => {
@@ -223,6 +244,19 @@ const ComponentTable = () => {
           progressComponent={<CustomLoader />}
         ></DataTable>
       </div>
+
+      {pdf && (
+        <>
+          <button onClick={() => setPdf(false)}>X</button>
+          <embed
+            className=" z-20 absolute right-0 bottom-0"
+            src={files}
+            type="application/pdf"
+            width={80 + "%"}
+            height={90 + "%"}
+          />
+        </>
+      )}
     </>
   );
 };

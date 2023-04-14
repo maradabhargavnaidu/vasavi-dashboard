@@ -15,11 +15,13 @@ const Expenseform = () => {
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
   const [uploadFile, setUploadFile] = useState(null);
+  const [fileURL, setFileURL] = useState("");
   const expenseCollection = collection(db, "Expenses");
   // UPLOAD FILE FUNCTRION
   const fileUpload = () => {
     if (uploadFile == null) return;
-    const fileRef = ref(storage, `file/${uploadFile.name + busNo}`);
+    const fileRef = ref(storage, `file/${uploadFile.name}`);
+    setFileURL(`file/`);
     uploadBytes(fileRef, uploadFile)
       .then(() => {
         alert("File uploaded");
@@ -36,6 +38,7 @@ const Expenseform = () => {
       Driver: driver,
       Date: date,
       Amount: amount,
+      fileURL,
     });
   };
   return (
@@ -144,19 +147,18 @@ const Expenseform = () => {
                 }}
                 placeholder="Date"
               />
-              <button
-                onClick={fileUpload}
-                className="bg-gray-200 px-5 py-2 rounded text-gray-600"
-              >
-                upload
-              </button>
             </div>
           </div>
         </form>
         {/*=== BACK AND SUBMIT BUTTONS ===*/}
         <div className=" md:text-right space-x-5 md:mt-20 md:mr-32 mt-10 text-center">
           {/*=== BACK BUTTON ===*/}
-
+          <button
+            onClick={fileUpload}
+            className="bg-gray-200 px-5 py-2 rounded text-gray-600"
+          >
+            upload
+          </button>
           <Link
             to="/expense"
             className="bg-gray-200 px-10 text-gray-600 rounded-md py-4"

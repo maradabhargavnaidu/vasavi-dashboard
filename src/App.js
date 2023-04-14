@@ -39,7 +39,7 @@ function App() {
   }
   function PublicOne() {
     if (users?.email == null) {
-      return <Login />;
+      return <>Loading</>;
     } else {
       return <Outlet />;
     }
@@ -57,7 +57,7 @@ function App() {
             <Route path="/driver" element={<Dashboard />} />
             <Route path="/expense" element={<Expensedashboard />} />
             <Route path="/students" element={<Studentsdashboard />} />
-            <Route path="/expense/files" element={<Files />} />
+            <Route path="/expense/file/:url" element={<Files />} />
           </Route>
           <Route element={<AdminElement />}>
             <Route path="/driver/createdriver" element={<User />} />

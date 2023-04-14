@@ -12,7 +12,6 @@ const Mainnav = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUserInfo(currentUser);
-      console.log("executing");
     });
   }, []);
 

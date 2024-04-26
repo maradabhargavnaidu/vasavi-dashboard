@@ -79,9 +79,9 @@ const Studentform = () => {
                   setEduType(e.target.value);
                 }}
               >
-                <option className="bg-blue-500 text-white">Select</option>
-                <option className="bg-blue-500 text-white">Primary</option>
-                <option className="bg-blue-500 text-white">Secondary</option>
+                <option className="bg-violet-500 text-white">Select</option>
+                <option className="bg-violet-500 text-white">Primary</option>
+                <option className="bg-violet-500 text-white">Secondary</option>
               </select>
             </div>
             {/*=== BATCH ===*/}
@@ -110,9 +110,9 @@ const Studentform = () => {
                   setAvailingBus(e.target.value);
                 }}
               >
-                <option className="bg-blue-500 text-white">Select</option>
-                <option className="bg-blue-500 text-white">Yes</option>
-                <option className="bg-blue-500 text-white">No</option>
+                <option className="bg-violet-500 text-white">Select</option>
+                <option className="bg-violet-500 text-white">Yes</option>
+                <option className="bg-violet-500 text-white">No</option>
               </select>
             </div>
             {/*=== ROUTE ===*/}
@@ -168,9 +168,9 @@ const Studentform = () => {
                   setPaid(e.target.value);
                 }}
               >
-                <option className="bg-blue-500 text-white">Select</option>
-                <option className="bg-blue-500 text-white">Yes</option>
-                <option className="bg-blue-500 text-white">No</option>
+                <option className="bg-violet-500 text-white">Select</option>
+                <option className="bg-violet-500 text-white">Yes</option>
+                <option className="bg-violet-500 text-white">No</option>
               </select>
             </div>
           </div>
@@ -187,7 +187,7 @@ const Studentform = () => {
           {/*=== SUBMIT BUTTON ===*/}
           <Link
             to="/students"
-            className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
+            className="bg-violet-600 text-gray-100 px-10 py-4 rounded-md"
             onClick={createStudent}
           >
             Submit

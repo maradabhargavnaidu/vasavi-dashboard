@@ -137,7 +137,7 @@ const BusComponent = () => {
       cell: (row) => (
         <>
           <button onClick={() => update(row.id)} className="px-1 ">
-            <i class="fa-solid fa-pencil text-[#4f5d73] hover:text-blue-600"></i>
+            <i className="fa-solid fa-pencil text-[#4f5d73] hover:text-violet-600"></i>
           </button>
           <button
             className={"px-1 "}
@@ -145,7 +145,7 @@ const BusComponent = () => {
               deleteBus(row.id);
             }}
           >
-            <i class="fa-solid fa-trash text-[#4f5d73] hover:text-blue-600"></i>
+            <i className="fa-solid fa-trash text-[#4f5d73] hover:text-violet-600"></i>
           </button>
         </>
       ),
@@ -172,11 +172,11 @@ const BusComponent = () => {
           <Link
             to="/buses/newbus"
             className={
-              "bg-white text-blue-600  border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md " +
+              "bg-white text-violet-600  border-violet-600 hover:bg-violet-600 hover:text-white border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            New Bus <i class="fa-regular fa-plus"></i>
+            New Bus <i className="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>
@@ -190,14 +190,14 @@ const BusComponent = () => {
               placeholder="Search by Bus Number"
               className="border-gray-200 border-2 rounded-md p-2 ml-4 w-36 md:w-60 outline-blue-600"
             />
-            {/* <i class="fa-solid fa-magnifying-glass ml-5"></i> */}
+            {/* <i className="fa-solid fa-magnifying-glass ml-5"></i> */}
           </div>
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
             onClick={() => downloadExcel(excelData)}
-            className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md mr-4"
+            className="bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2 px-4 py-2 rounded-md mr-4"
           >
-            Download Report <i class="fa-solid fa-download"></i>
+            Download Report <i className="fa-solid fa-download"></i>
           </button>
         </div>
       </div>

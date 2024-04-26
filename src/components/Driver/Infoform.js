@@ -129,7 +129,7 @@ const Infoform = () => {
           {/*=== SUBMIT BUTTON ===*/}
           <Link
             to="/driver"
-            className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
+            className="bg-violet-600 text-gray-100 px-10 py-4 rounded-md"
             onClick={createDriver}
           >
             Submit

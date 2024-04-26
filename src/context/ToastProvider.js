@@ -9,7 +9,8 @@ export const useToast = () => useContext(ToastContext);
 export const ToastProvider = ({ children }) => {
   const toastStyle = {
     position: "top-right",
-    className: "font-semibold text-xl border-blue-600 bg-blue-600 border-2 p-5",
+    className:
+      "font-semibold text-xl border-violet-600 bg-violet-600 border-2 p-5",
     style: {
       minWidth: "250px",
       minHeight: "70px",

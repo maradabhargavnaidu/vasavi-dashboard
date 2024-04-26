@@ -5,6 +5,7 @@ import { auth } from "../../firebase-config";
 import { db } from "../../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import { useToast } from "../../context/ToastProvider";
+import "../../App.css";
 const Register = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -25,6 +26,7 @@ const Register = () => {
           registerPassword,
           isUser: 1,
         });
+        success("Account created successfully !! Login to your account");
         Navigate("/");
       })
       .catch((error) => {
@@ -34,7 +36,27 @@ const Register = () => {
   };
   return (
     <div>
-      <div className="bg-blue-600 min-h-screen font-bcd">
+      <div className="area">
+        <ul className="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div className="min-h-screen font-bcd">
         <div className="container flex flex-col items-center justify-center h-screen mx-auto px-5">
           <h1 className="text-3xl text-white mb-2 font-semibold">
             Welcome !! Let's begin
@@ -61,7 +83,8 @@ const Register = () => {
                 setRegisterPassword(e.target.value);
               }}
             />
-            <div className="flex justify-between">
+            <div></div>
+            {/* <div className="flex justify-between">
               <span className="flex space-x-2 items-center">
                 <input type="checkbox" className="w-4 h-4" />
                 <p className="font-semibold text-[#4f5d73]">Remember me</p>
@@ -69,16 +92,16 @@ const Register = () => {
               <a href="#" className="font-semibold text-[#4f5d73]">
                 Forgot Password ?
               </a>
-            </div>
+            </div> */}
             <button
-              className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 font-semibold p-3 rounded"
+              className="bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2 font-semibold p-3 rounded"
               onClick={Register}
             >
               Create Account
             </button>
             <p className="text-gray-700">
               Already have an account ?&nbsp;&nbsp;
-              <Link to="/" className=" font-semibold hover:text-blue-600">
+              <Link to="/" className=" font-semibold hover:text-violet-600">
                 Sign In
               </Link>
             </p>

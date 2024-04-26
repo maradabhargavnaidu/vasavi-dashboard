@@ -30,14 +30,16 @@ const Mainnav = () => {
   return (
     <div>
       <nav className=" shadow-sm shadow-gray-500 font-abc">
-        <div class=" flex  md:space-x-0 w-full justify-between mx-auto shadow-gray-100 shadow-sm">
-          <div class="flex bg-blue-600 justify-between py-[26px] items-center px-5 w-[56%] md:w-[20%] fixed z-50">
+        <div className=" flex  md:space-x-0 w-full justify-between mx-auto shadow-gray-100 shadow-sm">
+          <div className="flex bg-violet-600 justify-between py-[26px] items-center px-5 w-[56%] md:w-[20%] fixed z-50">
             <Link to="/">
-              <h3 class="text-white text-lg font-semibold">VASAVI COLLEGE</h3>
+              <h3 className="text-white text-lg font-semibold">
+                VASAVI COLLEGE
+              </h3>
             </Link>
             <div onClick={Toggle} className="hidden md:block">
               <i
-                class={
+                className={
                   "fa-solid text-white cursor-pointer " +
                   (menuToggle ? "fa-toggle-on" : "fa-toggle-off")
                 }
@@ -45,7 +47,7 @@ const Mainnav = () => {
             </div>
             <div onClick={Toggle} className="md:hidden">
               <i
-                class={
+                className={
                   "fa-solid text-white cursor-pointer " +
                   (menuToggle ? "fa-toggle-off" : "fa-toggle-on")
                 }
@@ -59,7 +61,7 @@ const Mainnav = () => {
                 className="flex items-center justify-between space-x-3"
                 onClick={profileToggle}
               >
-                <i class="fa-solid fa-user bg-gray-200 p-3 rounded-full text-gray-400 cursor-pointer hover:bg-gray-100"></i>
+                <i className="fa-solid fa-user bg-gray-200 p-3 rounded-full text-gray-400 cursor-pointer hover:bg-gray-100"></i>
                 <div
                   className={
                     "hidden md:" + (ProfileToggle ? "hidden" : "block")
@@ -71,7 +73,7 @@ const Mainnav = () => {
                   </p>
                 </div>
                 <button
-                  className="bg-blue-600 px-4 text-gray-100 font-semibold py-2 rounded-md flex items-center "
+                  className="bg-violet-600 px-4 text-gray-100 font-semibold py-2 rounded-md flex items-center "
                   onClick={logout}
                 >
                   Logout
@@ -88,33 +90,33 @@ const Mainnav = () => {
         }
       >
         <ul>
-          <li className="py-2 hover:text-blue-600 text-lg">
+          <li className="py-2 hover:text-violet-600 text-lg">
             <Link to="/main">
-              <i class="fa-solid fa-house text-blue-600"></i>{" "}
+              <i className="fa-solid fa-house text-violet-600"></i>{" "}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dashboard
             </Link>
           </li>
-          <li className="py-2 hover:text-blue-600 text-lg">
+          <li className="py-2 hover:text-violet-600 text-lg">
             <Link to="/expense">
-              <i class="fa-solid fa-hand-holding-dollar text-blue-600"></i>
+              <i className="fa-solid fa-hand-holding-dollar text-violet-600"></i>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Expense
             </Link>
           </li>
-          <li className="py-2 hover:text-blue-600 text-lg">
+          <li className="py-2 hover:text-violet-600 text-lg">
             <Link to="/buses">
-              <i class="fa-solid fa-bus text-blue-600"></i>{" "}
+              <i className="fa-solid fa-bus text-violet-600"></i>{" "}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bus
             </Link>
           </li>
-          <li className="py-2 hover:text-blue-600 text-lg">
+          <li className="py-2 hover:text-violet-600 text-lg">
             <Link to="/students">
-              <i class="fa-solid fa-users text-blue-600"></i>{" "}
+              <i className="fa-solid fa-users text-violet-600"></i>{" "}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Students
             </Link>
           </li>
-          <li className="py-2 hover:text-blue-600 text-lg">
+          <li className="py-2 hover:text-violet-600 text-lg">
             <Link to="/driver">
-              <i class="fa-solid fa-id-card text-blue-600"></i>{" "}
+              <i className="fa-solid fa-id-card text-violet-600"></i>{" "}
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drivers
             </Link>
           </li>

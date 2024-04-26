@@ -161,7 +161,7 @@ const StudentComponent = () => {
               updatestudent(row.id);
             }}
           >
-            <i class="fa-solid fa-pencil text-[#4f5d73] hover:text-blue-600"></i>
+            <i className="fa-solid fa-pencil text-[#4f5d73] hover:text-violet-600"></i>
           </button>
           <button
             className="px-2 "
@@ -169,7 +169,7 @@ const StudentComponent = () => {
               deleteStudent(row.id);
             }}
           >
-            <i class="fa-solid fa-trash text-[#4f5d73] hover:text-blue-600"></i>
+            <i className="fa-solid fa-trash text-[#4f5d73] hover:text-violet-600"></i>
           </button>
         </>
       ),
@@ -195,11 +195,11 @@ const StudentComponent = () => {
           <Link
             to="/students/createstudent"
             className={
-              "bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md " +
+              "bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2 px-4 py-2 rounded-md " +
               (userInfo?.email === "admin@gmail.com" ? "" : "hidden")
             }
           >
-            New Student <i class="fa-regular fa-plus"></i>
+            New Student <i className="fa-regular fa-plus"></i>
           </Link>
         </div>
       </main>
@@ -217,9 +217,9 @@ const StudentComponent = () => {
           {/*=== DOWNLOAD REPORT BUTTON ===*/}
           <button
             onClick={() => downloadExcel(excelData)}
-            className="bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white border-2 px-4 py-2 rounded-md mr-4"
+            className="bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2 px-4 py-2 rounded-md mr-4"
           >
-            Download Report <i class="fa-solid fa-download"></i>
+            Download Report <i className="fa-solid fa-download"></i>
           </button>
         </div>
       </div>

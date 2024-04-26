@@ -68,9 +68,9 @@ const Expenseform = () => {
                   }}
                   value={Expense.ExpenseType}
                 >
-                  <option className="bg-blue-500 text-white">Select</option>
-                  <option className="bg-blue-500 text-white">Fuel</option>
-                  <option className="bg-blue-500 text-white">Repair</option>
+                  <option className="bg-violet-500 text-white">Select</option>
+                  <option className="bg-violet-500 text-white">Fuel</option>
+                  <option className="bg-violet-500 text-white">Repair</option>
                 </select>
               </div>
             </div>
@@ -147,7 +147,7 @@ const Expenseform = () => {
             {/*=== SUBMIT BUTTON ===*/}
             <Link
               to="/expense"
-              className="bg-blue-600 text-gray-100 px-10 py-4 rounded-md"
+              className="bg-violet-600 text-gray-100 px-10 py-4 rounded-md"
               onClick={updateExpense}
             >
               Update

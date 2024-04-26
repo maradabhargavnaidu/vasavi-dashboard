@@ -6,15 +6,16 @@ import { useToast } from "../../context/ToastProvider";
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   const Navigate = useNavigate();
   const { success, errormsg } = useToast();
 
   const Login = async (e) => {
     e.preventDefault();
     try {
-      if (login.length == 0) return errormsg("Enter Email");
-      if (password.length == 0) return errormsg("Enter Password");
+      if (login.length === 0) return errormsg("Enter Email");
+      if (password.length === 0) return errormsg("Enter Password");
+      if (password.length < 6)
+        return errormsg("Password should contain atleast 6 characters");
       const user = await signInWithEmailAndPassword(auth, login, password);
       Navigate("/main");
     } catch (error) {

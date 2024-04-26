@@ -13,8 +13,10 @@ const Register = () => {
   const Navigate = useNavigate();
   const Register = (e) => {
     e.preventDefault();
-    if (registerEmail.length == 0) return errormsg("Enter Email");
-    if (registerPassword.length == 0) return errormsg("Enter Password");
+    if (registerEmail.length === 0) return errormsg("Enter Email");
+    if (registerPassword.length === 0) return errormsg("Enter Password");
+    if (registerPassword.length < 6)
+      return errormsg("Password should contain atleast 6 characters");
     createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
       .then((userCredential) => {
         const user = userCredential.user;

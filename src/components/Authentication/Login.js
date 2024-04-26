@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
-
+import { useToast } from "../../context/ToastProvider";
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const Navigate = useNavigate();
+  const { success, errormsg } = useToast();
 
   const Login = async (e) => {
     e.preventDefault();
     try {
+      if (login.length == 0) return errormsg("Enter Email");
+      if (password.length == 0) return errormsg("Enter Password");
       const user = await signInWithEmailAndPassword(auth, login, password);
       Navigate("/main");
     } catch (error) {
-      setError(true);
+      errormsg(error.code);
     }
   };
 
@@ -67,11 +70,6 @@ const Login = () => {
             <Link to="/register" className="font-semibold hover:text-blue-600">
               SignUp
             </Link>
-            {error && (
-              <div className="text-red-500 font-semibold">
-                Wrong Email or Password
-              </div>
-            )}
           </p>
         </form>
       </div>

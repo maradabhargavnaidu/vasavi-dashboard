@@ -4,13 +4,17 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { db } from "../../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
+import { useToast } from "../../context/ToastProvider";
 const Register = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const { success, errormsg } = useToast();
   const userCollection = collection(db, "users");
   const Navigate = useNavigate();
   const Register = (e) => {
     e.preventDefault();
+    if (registerEmail.length == 0) return errormsg("Enter Email");
+    if (registerPassword.length == 0) return errormsg("Enter Password");
     createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -23,7 +27,7 @@ const Register = () => {
       })
       .catch((error) => {
         const errorcode = error.code;
-        const errorMessage = error.message;
+        errormsg(errorcode);
       });
   };
   return (

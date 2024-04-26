@@ -6,6 +6,8 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { ToastProvider } from "./context/ToastProvider";
 import Dashboard from "./components/Driver/Driverdashboard";
 import User from "./components/Driver/Driver";
 import Expensedashboard from "./components/Expenses/Expensedashboard";
@@ -47,29 +49,39 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<PublicOne />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/main" element={<MainDashboard />} />
-            <Route path="/buses" element={<Busdashboard />} />
-            <Route path="/driver" element={<Dashboard />} />
-            <Route path="/expense" element={<Expensedashboard />} />
-            <Route path="/students" element={<Studentsdashboard />} />
-            <Route path="/file/:url" element={<Files />} />
-          </Route>
-          <Route element={<AdminElement />}>
-            <Route path="/driver/createdriver" element={<User />} />
-            <Route path="/expense/create-expense" element={<Expense />} />
-            <Route path="/buses/newbus" element={<Bus />} />
-            <Route path="/students/createstudent" element={<Student />} />
-            <Route path="/updateExpense/:id" element={<Expenseupdateform />} />
-            <Route path="/updatestudent/:id" element={<Studentupdateform />} />
-            <Route path="/updatebus/:id" element={<Busupdateform />} />
-            <Route path="/updatedriver/:id" element={<Infoupdateform />} />
-          </Route>
-        </Routes>
+        <ToastProvider>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<PublicOne />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/main" element={<MainDashboard />} />
+              <Route path="/buses" element={<Busdashboard />} />
+              <Route path="/driver" element={<Dashboard />} />
+              <Route path="/expense" element={<Expensedashboard />} />
+              <Route path="/students" element={<Studentsdashboard />} />
+              <Route path="/file/:url" element={<Files />} />
+            </Route>
+            <Route element={<AdminElement />}>
+              <Route path="/driver/createdriver" element={<User />} />
+              <Route path="/expense/create-expense" element={<Expense />} />
+              <Route path="/buses/newbus" element={<Bus />} />
+              <Route path="/students/createstudent" element={<Student />} />
+              <Route
+                path="/updateExpense/:id"
+                element={<Expenseupdateform />}
+              />
+              <Route
+                path="/updatestudent/:id"
+                element={<Studentupdateform />}
+              />
+              <Route path="/updatebus/:id" element={<Busupdateform />} />
+              <Route path="/updatedriver/:id" element={<Infoupdateform />} />
+            </Route>
+          </Routes>
+        </ToastProvider>
+
+        <Toaster />
       </Router>
     </div>
   );

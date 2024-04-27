@@ -196,7 +196,7 @@ const ComponentTable = () => {
   return (
     <>
       <main>
-        <div className="flex justify-between container mx-auto mt-28 px-4 float-right md:w-[80%] font-abc ">
+        <div className="flex justify-between container mx-auto mt-28 px-4 float-right font-abc ">
           {/*=== EXPENSES HEADING ===*/}
           <h1 className="md:text-4xl text-xl font-semibold text-[#4f5d73]">
             Expenses
@@ -213,7 +213,7 @@ const ComponentTable = () => {
           </Link>
         </div>
       </main>
-      <div className="mt-16 container mx-auto float-right md:w-[80%] font-abc">
+      <div className="mt-16 container mx-auto float-right font-abc">
         <div className="flex justify-between py-5 container w-full mx-auto">
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
@@ -242,7 +242,7 @@ const ComponentTable = () => {
         </div>
       </div>
       {/* DATA TABLE */}
-      <div className="container mx-auto md:w-[80%] float-right">
+      <div className="container mx-auto float-right">
         <DataTable
           columns={columns}
           data={data ? search : expenses}

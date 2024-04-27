@@ -42,7 +42,7 @@ const Expenseform = () => {
     });
   };
   return (
-    <div className="md:w-[80%] md:px-4 md:float-right font-abc mt-28">
+    <div className="md:w-[100%] md:px-4 md:float-right font-abc mt-28">
       {/*=== EXPENSE FORM START HERE ===*/}
       <main className="container mx-auto mt-5">
         <h1 className="font-medium text-4xl text-center text-[#4f5d73]">

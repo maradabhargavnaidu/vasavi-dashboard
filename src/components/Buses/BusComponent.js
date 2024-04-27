@@ -163,7 +163,7 @@ const BusComponent = () => {
   return (
     <>
       <main>
-        <div className="flex justify-between container mx-auto mt-28 px-4 float-right md:w-[80%] font-abc">
+        <div className="flex justify-between container mx-auto mt-28 px-4 float-right  font-abc">
           {/*=== EXPENSES HEADING ===*/}
           <h1 className="md:text-4xl text-xl font-semibold text-[#4f5d73]">
             Buses
@@ -180,7 +180,7 @@ const BusComponent = () => {
           </Link>
         </div>
       </main>
-      <div className="mt-16 container mx-auto float-right md:w-[80%] font-abc">
+      <div className="mt-16 container mx-auto float-right  font-abc">
         <div className="shadow-sm shadow-gray-400 flex justify-between py-5 container w-full mx-auto">
           <div>
             {/*=== TABLE SEARCH BAR ===*/}
@@ -201,7 +201,7 @@ const BusComponent = () => {
           </button>
         </div>
       </div>
-      <div className="container mx-auto md:w-[80%] float-right">
+      <div className="container mx-auto  float-right">
         <DataTable
           columns={buscolumns}
           data={data ? search : buses}

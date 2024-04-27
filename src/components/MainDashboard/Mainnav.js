@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
-
+import Asidenav from "./Asidenav";
 const Mainnav = () => {
   const [userInfo, setUserInfo] = useState();
   const [menuToggle, setMenuToggle] = useState(true);
@@ -31,10 +31,10 @@ const Mainnav = () => {
     <div>
       <nav className=" shadow-sm shadow-gray-500 font-abc">
         <div className=" flex  md:space-x-0 w-full justify-between mx-auto shadow-gray-100 shadow-sm">
-          <div className="flex bg-violet-600 justify-between py-[26px] items-center px-5 w-[56%] md:w-[20%] fixed z-50">
-            <Link to="/">
+          <div className="flex bg-violet-600 justify-between py-[26px] items-center px-5 fixed z-50">
+            <Link to="/main">
               <h3 className="text-white text-lg font-semibold">
-                VASAVI COLLEGE
+                COLLEGE PORTAL
               </h3>
             </Link>
             <div onClick={Toggle} className="hidden md:block">
@@ -85,39 +85,45 @@ const Mainnav = () => {
       </nav>
       <div
         className={
-          "flex flex-col bg-gray-100 w-[56.5%] text-[#4f5d73] font-abc z-50 float-left md:w-[20%] shadow-sm shadow-gray-400 h-[100vh] px-8 py-5 fixed top-20 " +
+          "flex flex-col bg-gray-100 text-[#4f5d73] font-abc z-50 float-left shadow-sm shadow-gray-400 h-[100vh] px-8 py-5 fixed top-20 " +
           (menuToggle ? "md:block hidden" : "md:hidden block")
         }
       >
         <ul>
-          <li className="py-2 hover:text-violet-600 text-lg">
-            <Link to="/main">
-              <i className="fa-solid fa-house text-violet-600"></i>{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dashboard
+          <li className="py-2 hover:text-white hover:bg-violet-600 text-lg">
+            <Link to="/main" className="flex items-center justify-start gap-5">
+              <i className="fa-solid fa-house text-violet-600 hover:text-white"></i>{" "}
+              Dashboard
             </Link>
           </li>
           <li className="py-2 hover:text-violet-600 text-lg">
-            <Link to="/expense">
+            <Link
+              to="/expense"
+              className="flex items-center justify-start gap-5"
+            >
               <i className="fa-solid fa-hand-holding-dollar text-violet-600"></i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Expense
+              Expense
             </Link>
           </li>
           <li className="py-2 hover:text-violet-600 text-lg">
-            <Link to="/buses">
-              <i className="fa-solid fa-bus text-violet-600"></i>{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bus
+            <Link to="/buses" className="flex items-center justify-start gap-5">
+              <i className="fa-solid fa-bus text-violet-600"></i> Bus
             </Link>
           </li>
           <li className="py-2 hover:text-violet-600 text-lg">
-            <Link to="/students">
-              <i className="fa-solid fa-users text-violet-600"></i>{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Students
+            <Link
+              to="/students"
+              className="flex items-center justify-start gap-5"
+            >
+              <i className="fa-solid fa-users text-violet-600"></i> Students
             </Link>
           </li>
           <li className="py-2 hover:text-violet-600 text-lg">
-            <Link to="/driver">
-              <i className="fa-solid fa-id-card text-violet-600"></i>{" "}
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drivers
+            <Link
+              to="/driver"
+              className="flex items-center justify-start gap-5"
+            >
+              <i className="fa-solid fa-id-card text-violet-600"></i> Drivers
             </Link>
           </li>
         </ul>

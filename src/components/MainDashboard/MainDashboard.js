@@ -5,7 +5,9 @@ import BarChart from "./BarChart";
 import { Bar } from "react-chartjs-2";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
-
+import Asidenav from "./Asidenav";
+import Cards from "./Cards";
+import Navbar from "./Navbar";
 const MainDashboard = () => {
   const expenseCollection = collection(db, "Expenses");
   const [expenseMonth, setExpenseMonth] = useState([]);
@@ -159,14 +161,28 @@ const MainDashboard = () => {
   const [expenseData, setExpenseData] = useState({ labels: [], datasets: [] });
   const [totalData, setTotalData] = useState({ labels: [], datasets: [] });
   return (
-    <div>
-      <Mainnav />
-      <MainBar />
-      <div className="md:w-[850px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg">
-        <BarChart Chartdata={expenseData} />
-        <BarChart Chartdata={totalData} />
+    <div className="md:flex h-screen ">
+      <Asidenav />
+      <div className="md:w-full md:px-10 ">
+        <div className="ml-0 md:ml-[200px]">
+          <Navbar />
+          <Cards />
+        </div>
+        <div className=" md:ml-60">
+          <BarChart Chartdata={expenseData} />
+          <BarChart Chartdata={totalData} />
+          {/* <Outlet /> */}
+        </div>
       </div>
     </div>
+    // <div>
+    //   <Asidenav />
+    //   <MainBar />
+    //   <div className="md:w-[850px] md:mt-64 px-5 mx-auto container bg-gray-100 rounded-lg">
+    //     <BarChart Chartdata={expenseData} />
+    //     <BarChart Chartdata={totalData} />
+    //   </div>
+    // </div>
   );
 };
 

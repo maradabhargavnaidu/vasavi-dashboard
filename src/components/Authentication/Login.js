@@ -8,7 +8,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const Navigate = useNavigate();
   const { success, errormsg } = useToast();
-
+  const Demoadmin = (e) => {
+    e.preventDefault();
+    setLogin("admin@gmail.com");
+    setPassword("Admin1");
+  };
   const Login = async (e) => {
     e.preventDefault();
     try {
@@ -57,6 +61,7 @@ const Login = () => {
           <input
             type="email"
             placeholder="Enter Email"
+            value={login}
             className="rounded p-3 border-gray-400 border-2 outline-violet-600"
             onChange={(e) => {
               setLogin(e.target.value);
@@ -65,6 +70,7 @@ const Login = () => {
           <label className="font-semibold text-[#4f5d73]">Password</label>
           <input
             type="password"
+            value={password}
             placeholder="Enter Password"
             className="rounded p-3 border-gray-400 border-2 outline-violet-600"
             onChange={(e) => {
@@ -81,6 +87,12 @@ const Login = () => {
               Forgot Password ?
             </a>
           </div> */}
+          <button
+            className="bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2  p-3 rounded font-semibold"
+            onClick={Demoadmin}
+          >
+            Demo admin
+          </button>
           <button
             className="bg-white text-violet-600 border-violet-600 hover:bg-violet-600 hover:text-white border-2  p-3 rounded font-semibold"
             onClick={Login}

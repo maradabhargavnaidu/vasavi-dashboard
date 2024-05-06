@@ -88,6 +88,7 @@ const Asidenav = () => {
         </Link>
 
         <Link
+          to="/"
           className={
             "flex items-center text-[14px] text-white pl-4 cursor-pointer py-3 rounded-md w-[176px] z-20 " +
             (active === "logout" ? "bg-violet-400" : "")
